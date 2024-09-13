@@ -1,0 +1,31 @@
+.quien-soy-container {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .personal-info ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .profile-image img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+  }
+  
+  .game-description {
+    margin-top: 20px;
+  }
+  
+  /* .foto-perfil {
+    border: 3px solid #ccc;
+    border-radius: 50%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+   */
+  .foto-perfil {
+    max-width: 100%; /* Asegura que la imagen no se desborde */
+    height: auto; /* Mantiene la proporción de la imagen */
+  }
+  

@@ -1,0 +1,57 @@
+<nav class="navbar">
+  <div class="navbar-left">
+    <img src="assets/imagenes/logo.jpg" alt="Game Icon" class="navbar-icon">
+    <span class="navbar-title">La sala del vicio</span>
+  </div>
+  <div class="navbar-center">
+    <a href="/home" class="nav-link">Home</a>
+    <a href="/quien-soy" class="nav-link">Quién Soy</a>
+    <div class="dropdown">
+      <button class="dropdown-toggle">Juegos</button>
+      <div class="dropdown-menu">
+        <a href="/ahorcado" class="dropdown-item">Ahorcado</a>
+        <a href="/mayor-menor" class="dropdown-item">Mayor o Menor</a>
+        <a href="/preguntados" class="dropdown-item">Preguntados</a>
+        <a href="/juego-propio" class="dropdown-item">Mi Juego</a>
+      </div>
+    </div>
+  </div>
+  <div class="navbar-right">
+    <a href="/login" class="nav-link">Iniciar Sesión</a>
+    <a href="/register" class="nav-link">Registrarse</a>
+  </div>
+</nav>
+
+
+
+<div class="home-container">
+    <h1>Bienvenido a la Sala de Juegos</h1>
+  
+    <div class="game-grid">
+      <div class="game-card" (click)="goTo('ahorcado')">
+        <h2>Ahorcado</h2>
+        <p>¡Adivina la palabra antes de que sea tarde!</p>
+      </div>
+  
+      <div class="game-card" (click)="goTo('mayor-menor')">
+        <h2>Mayor o Menor</h2>
+        <p>Adivina si la siguiente carta será mayor o menor.</p>
+      </div>
+  
+      <div class="game-card" (click)="goTo('preguntados')">
+        <h2>Preguntados</h2>
+        <p>Responde preguntas y demuestra tu conocimiento.</p>
+      </div>
+  
+      <div class="game-card" (click)="goTo('juego-propio')">
+        <h2>Mi Juego</h2>
+        <p>Juega al juego personalizado que he creado.</p>
+      </div>
+  
+      <div class="game-card" (click)="goTo('resultados')">
+        <h2>Resultados</h2>
+        <p>Ver los listados de resultados de los jugadores.</p>
+      </div>
+    </div>
+  </div>
+
