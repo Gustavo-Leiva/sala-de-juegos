@@ -1,0 +1,34 @@
+<body>
+  <div class="game-container">
+    <h1>Ahorcado</h1>
+  
+    <!-- Mostrar progreso de la palabra -->
+    <div class="word-display">
+      <span *ngFor="let char of displayedWord">
+        {{ char }}
+      </span>
+    </div>
+  
+    <!-- Mostrar el ahorcado (opcional, basado en errores) -->
+    <div class="hangman-image">
+      <img [src]="hangmanImages[errors]" alt="Ahorcado" />
+    </div>
+  
+    <!-- Teclado de letras -->
+    <div class="letters" *ngIf="!gameOver">
+      <button 
+      *ngFor="let letter of alphabet" 
+      [disabled]="usedLetters.includes(letter)" 
+      (click)="selectLetter(letter)">      
+      {{ letter }}
+      </button>
+    </div>
+  
+    <!-- Mostrar mensaje si el jugador gana o pierde -->
+    <div *ngIf="gameOver">
+      <p>{{ message }}</p>
+      <button (click)="restartGame()">Reiniciar</button>
+    </div>
+  </div>
+</body>
+

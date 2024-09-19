@@ -1,8 +1,10 @@
 /* Estilos globales */
 body {
   margin: 0;
+  padding: 0;
   font-family: 'Comic Sans MS', sans-serif; 
-  background-color: #f0f8ff; 
+  background-color: #fdf6e3; /* Blanco cálido */
+  background-color: #f5f5f5; /* Gris muy claro */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -16,32 +18,49 @@ body {
   align-items: center;
   width: 100%;
   height: 100vh;
+  padding: 20px; /* Añade un pequeño relleno para evitar el desbordamiento */
+  box-sizing: border-box; /* Incluye el padding en el cálculo del ancho/alto */
 }
 
 /* Caja de login */
 .login-box {
   background-color: #fce4ec; /* Fondo rosa suave*/
-  padding: 40px;
+  padding:  40px;
+  padding-top: 10px;
   border-radius: 15px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Sombra más fuerte */
   width: 100%;
   max-width: 400px;
+  max-height: 100vh; /* Limita la altura máxima para evitar desbordamiento */
+  overflow-y: auto; /* Añade scroll si el contenido es muy alto */
   border: 3px solid #ff9800; /* Borde naranja vibrante */
-  animation: slideDown 1s ease-out; /* Aplicación de la animación de deslizamiento */
-  /* animation: bounce 2s ease; */
-  /* animation: rotateIn 1s ease-out; */
-  /* animation: fadeIn 1s ease-in-out; */
-  /* animation: pulse 2.1s infinite; Animación sutil */
+  animation: slideDown 1s ease-out;
+  box-sizing: border-box; /* Incluye el padding y borde en el cálculo del ancho/alto */
+}
+
+/* Mensaje de error */
+.error-message {
+  background-color: #f8d7da; /* Fondo rojo claro */
+  color: #721c24; /* Texto rojo oscuro */
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 15px;
+  text-align: center;
+  font-size: 0.9rem;
+  max-width: 100%; /* Asegura que el mensaje no se desborde */
+  box-sizing: border-box; /* Incluye el padding en el cálculo del ancho */
 }
 
 /* Título con estilo de juego */
 h1 {
   text-align: center;
-  margin-bottom: 20px;
+  margin-top:0.4rem;
+  /* margin-bottom: 10px; */
   font-size: 2.5rem;
-  color: #ff5722; /* Color naranja vibrante */
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Sombra para dar efecto de juego */
-  letter-spacing: 2px; /* Espaciado de letras para un estilo más de juego */
+  color: #ff5722;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  letter-spacing: 2px;
+  word-wrap: break-word; /* Evita que el texto se desborde en palabras largas */
 }
 
 /* Texto descriptivo */
@@ -80,8 +99,10 @@ input:focus {
 
 /* Botón con un estilo llamativo */
 .btn {
+  
   width: 100%;
   padding: 12px;
+  margin-top: 0.5rem;
   background-color: #ff9800; /* Naranja vibrante */
   border: none;
   border-radius: 8px;

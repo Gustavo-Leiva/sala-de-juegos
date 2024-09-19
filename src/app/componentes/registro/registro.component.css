@@ -1,0 +1,122 @@
+/* Estilos globales */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Comic Sans MS', sans-serif; 
+    background-color: #fdf6e3; /* Blanco cálido */
+    background-color: #f5f5f5; /* Gris muy claro */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  /* Contenedor del login */
+  .login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+  }
+  
+  /* Caja de login */
+  .login-box {
+    background-color: #fce4ec; /* Fondo rosa suave*/
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Sombra más fuerte */
+    width: 100%;
+    max-width: 400px;
+    border: 3px solid #ff9800; /* Borde naranja vibrante */
+    animation: slideDown 1s ease-out; /* Aplicación de la animación de deslizamiento */
+    
+  }
+  
+  /* Título con estilo de juego */
+  h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 2.5rem;
+    color: #ff5722; /* Color naranja vibrante */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Sombra para dar efecto de juego */
+    letter-spacing: 2px; /* Espaciado de letras para un estilo más de juego */
+  }
+  
+  /* Texto descriptivo */
+  p {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 1.1rem; /* Un poco más grande para una mejor legibilidad */
+  }
+  
+  /* Estilos del formulario */
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 1rem;
+    color: #333;
+  }
+  
+  input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 2px solid #ff9800; /* Borde a juego con el diseño */
+    font-size: 1rem;
+    box-sizing: border-box;
+  }
+  
+  input:focus {
+    outline: none;
+    border-color: #ff5722; /* Cambio de color al enfocar */
+  }
+  
+  /* Botón con un estilo llamativo */
+  .btn {
+    
+    width: 100%;
+    padding: 12px;
+    margin-top: 0.5rem;
+    background-color: #ff9800; /* Naranja vibrante */
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-transform: uppercase;
+  }
+  
+  .btn:hover {
+    background-color: #e65100; /* Naranja más oscuro al pasar el ratón */
+  }
+  /* Animación de deslizamiento desde arriba */
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%); /* Empieza fuera de la pantalla arriba */
+    opacity: 0; /* Inicialmente invisible */
+  }
+  to {
+    transform: translateY(0); /* Termina en su posición original */
+    opacity: 1; /* Finalmente visible */
+  }
+}
+
+/* Estilos responsivos */
+@media (max-width: 600px) {
+  .login-box {
+    padding: 20px;
+    max-width: 100%;
+    box-shadow: none;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+}

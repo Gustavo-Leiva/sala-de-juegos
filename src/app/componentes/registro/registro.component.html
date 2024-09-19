@@ -1,0 +1,30 @@
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <h1>Bienvenido</h1>
+            <p>¡Registra tus credenciales para comenzar a jugar!</p>
+
+            <form (ngSubmit)="Register()">
+                <div class="form-group">
+                    <!-- <label for="email">Usuario (Email):</label> -->
+                    <input id="email" [(ngModel)]="newUserMail" name="email" type="email" required  placeholder="Usuario" />
+                </div>
+
+                <div class="form-group">
+                    <!-- <label for="password">Clave:</label> -->
+                    <input id="password" [(ngModel)]="newUserPWD" name="password" type="password" required  placeholder="Contraseña" />
+                </div>
+
+                <button type="submit" class="btn">Registrarse</button>
+            </form>
+            <!-- Aquí se muestra el mensaje de error si flagError es true -->
+            <div *ngIf="flagError" class="error-message">
+                {{ msjError }}
+            </div>
+            <!-- Aquí se muestra el mensaje de éxito si msjExito tiene contenido -->
+            <div *ngIf="msjExito" class="success-message">
+                {{ msjExito }}
+            </div>
+        </div>
+    </div>
+</body>

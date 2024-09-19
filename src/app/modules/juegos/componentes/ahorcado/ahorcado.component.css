@@ -1,0 +1,109 @@
+/* Fondo de la página */
+body {
+  background-color: #e1f5fe; /* Fondo celeste claro para toda la página */
+  margin: 0;
+  padding: 0; /* Elimina el margen por defecto */
+  font-family: 'Roboto', sans-serif; /* Fuente moderna y legible */
+}
+
+/* Contenedor del juego */
+.game-container {
+  text-align: center;
+  max-width: 100%;
+  padding: 20px; /* Aumenta el padding para más espacio */
+  background-color: #ffffff; /* Fondo blanco para el contenedor del juego */
+  border-radius: 15px; /* Bordes más redondeados */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Sombra más prominente */
+  margin: 20px; /* Añade margen alrededor del contenedor */
+}
+
+/* Estilo del título */
+h1 {
+  color: #4a90e2; /* Color azul brillante para el título */
+  font-size: 2.5rem; /* Tamaño más grande para el título */
+  margin-bottom: 20px;
+}
+
+/* Estilo de la palabra */
+.word-display {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 10px; /* Espaciado entre las letras */
+}
+
+.word-display span {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  line-height: 50px; /* Para centrar verticalmente el texto */
+  border: 2px solid #4a90e2; /* Borde azul brillante */
+  text-align: center;
+  font-size: 2rem;
+  background-color: #f0f4f8; /* Fondo gris claro */
+  color: #333; /* Color del texto */
+  border-radius: 10px; /* Bordes más redondeados */
+}
+
+/* Estilo del teclado de letras */
+.letters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.letters button {
+  font-size: 1.5rem;
+  padding: 10px;
+  width: 60px;
+  height: 60px;
+  text-align: center;
+  background-color: #ffffff; /* Fondo blanco para los botones */
+  border: 2px solid #4a90e2; /* Borde azul brillante */
+  border-radius: 10px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.letters button:hover {
+  background-color: #4a90e2; /* Fondo azul brillante al pasar el ratón */
+  color: #ffffff; /* Color de texto blanco al pasar el ratón */
+  cursor: pointer;
+  transform: scale(1.1); /* Aumenta el tamaño del botón al pasar el ratón */
+}
+
+button[disabled] {
+  background-color: #e0e0e0; /* Fondo gris claro para los botones deshabilitados */
+  color: #999; /* Color de texto gris claro */
+  cursor: not-allowed; /* Mostrar que no se puede hacer clic */
+}
+
+/* Estilo de la imagen del ahorcado */
+.hangman-image {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.hangman-image img {
+  width: 200px;  /* Ajusta el tamaño de ancho que desees */
+  height: auto;  /* Mantiene la proporción de la imagen */
+  max-height: 300px; /* Limita la altura máxima de la imagen */
+}
+
+/* Estilos responsivos */
+@media screen and (max-width: 768px) {
+  .word-display span {
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 1.5rem;
+  }
+
+  .letters button {
+    width: 50px;
+    height: 50px;
+    font-size: 1.2rem;
+  }
+}

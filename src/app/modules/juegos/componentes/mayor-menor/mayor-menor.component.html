@@ -1,0 +1,20 @@
+<div class="game-container">
+    <h1>Mayor o Menor</h1>
+  
+    <div class="card-container">
+      <p>Carta actual:</p>
+      <img *ngIf="currentCard" [src]="currentCard.image" alt="Carta actual" class="card-image" />
+    </div>
+  
+    <div class="controls">
+      <button (click)="guessHigher()" class="guess-button">Mayor</button>
+      <button (click)="guessLower()" class="guess-button">Menor</button>
+    </div>
+  
+    <div class="score-container">
+      <p>Puntuación: <strong>{{ score }}</strong></p>
+      <div class="message">{{ message }}</div>
+    </div>
+  </div>
+  
+  

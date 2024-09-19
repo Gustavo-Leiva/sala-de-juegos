@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MayorOMenorComponent } from './mayor-o-menor.component';
+import { MayorMenorComponent } from './mayor-menor.component';
 
-describe('MayorOMenorComponent', () => {
-  let component: MayorOMenorComponent;
-  let fixture: ComponentFixture<MayorOMenorComponent>;
+describe('MayorMenorComponent', () => {
+  let component: MayorMenorComponent;
+  let fixture: ComponentFixture<MayorMenorComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MayorOMenorComponent]
+      imports: [MayorMenorComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(MayorOMenorComponent);
+    fixture = TestBed.createComponent(MayorMenorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
