@@ -2,15 +2,16 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Auth, signInWithEmailAndPassword, signOut, User } from '@angular/fire/auth';
 
-
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
   public userActive: User | null = null;
+  isLoading = false; // Indica si se está realizando el login
 
-  constructor(private auth: Auth, private router: Router) {
+
+  constructor(public auth: Auth, private router: Router) {
     this.auth.onAuthStateChanged(user => {
       this.userActive = user;
     });
@@ -18,8 +19,20 @@ export class AuthService {
 
    // Método para iniciar sesión
   async Login(email: string, password: string): Promise<void> {
-    const result = await signInWithEmailAndPassword(this.auth, email, password);
-    this.userActive = result.user;
+    this.isLoading = true; // Iniciar la carga
+    try{
+      
+      const result = await signInWithEmailAndPassword(this.auth, email, password);
+      this.userActive = result.user;
+    }
+    catch(error){
+      console.error('Error al iniciar sesión:', error);
+      throw error; // Lanza el error para que sea capturado en el componente
+    }
+    finally{
+      this.isLoading = false; // Termina la carga
+    }
+
   }
 
   // Método para cerrar sesión
@@ -38,7 +51,11 @@ export class AuthService {
     return this.userActive;
   }
 
+  getUserEmail(){
+    return this.userActive ? this.userActive.email : null;
+  }
+
  
 
-  }
+}
 

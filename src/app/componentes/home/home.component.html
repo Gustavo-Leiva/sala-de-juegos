@@ -57,6 +57,26 @@
       </div>
     </div>
   </div>
+  <!-- <ng-container *ngIf="authService.getUser() != null">
+    <div class="tooltip-container">
+      <span class="text">Usuario logueado</span>
+    </div> 
+    <div class="chat">
+      <app-chat></app-chat> 
+    </div>
+  </ng-container> -->
+
+  <ng-container *ngIf="authService.getUser() != null">
+    <div class="tooltip-container">
+      <span class="text">Usuario logueado</span>
+    </div> 
+    <div class="chat">
+      <app-chat></app-chat>
+    </div>
+  </ng-container>
+  
+  
+
 </body>
  
 

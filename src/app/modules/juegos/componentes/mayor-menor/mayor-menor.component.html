@@ -1,20 +1,59 @@
-<div class="game-container">
-    <h1>Mayor o Menor</h1>
-  
-    <div class="card-container">
-      <p>Carta actual:</p>
-      <img *ngIf="currentCard" [src]="currentCard.image" alt="Carta actual" class="card-image" />
+<div class="fondo">
+  <a class="button" [routerLink]="['/home']">
+    <div class="button-box">
+      <span class="button-elem">
+        <svg viewBox="0 0 46 40" xmlns="http://www.w3.org/2000/svg">
+          <path d="M46 20.038c0-.7-.3-1.5-.8-2.1l-16-17c-1.1-1-3.2-1.4-4.4-.3-1.2 1.1-1.2 3.3 0 4.4l11.3 11.9H3c-1.7 0-3 1.3-3 3s1.3 3 3 3h33.1l-11.3 11.9c-1 1-1.2 3.3 0 4.4 1.2 1.1 3.3.8 4.4-.3l16-17c.5-.5.8-1.1.8-1.9z"></path>
+        </svg>
+      </span>
+      <!-- <span class="button-elem">
+        <svg viewBox="0 0 46 40">
+          <path d="M46 20.038c0-.7-.3-1.5-.8-2.1l-16-17c-1.1-1-3.2-1.4-4.4-.3-1.2 1.1-1.2 3.3 0 4.4l11.3 11.9H3c-1.7 0-3 1.3-3 3s1.3 3 3 3h33.1l-11.3 11.9c-1 1-1.2 3.3 0 4.4 1.2 1.1 3.3.8 4.4-.3l16-17c.5-.5.8-1.1.8-1.9z"></path>
+        </svg> -->
+      <!-- </span> -->
     </div>
+  </a>
   
-    <div class="controls">
-      <button (click)="guessHigher()" class="guess-button">Mayor</button>
-      <button (click)="guessLower()" class="guess-button">Menor</button>
+  <div class="thirteen">
+    <h1>Mayor, menor o igual</h1>
+  </div>
+  
+  <div >
+    Puntaje: {{puntaje}}
+  </div>
+  
+  <div class="cartas">
+     <div>
+      <img src="{{ultimaCarta.imagen}}" width="150" height="200" alt="Carta anterior">
     </div>
-  
-    <div class="score-container">
-      <p>Puntuación: <strong>{{ score }}</strong></p>
-      <div class="message">{{ message }}</div>
+    <div *ngIf="existeNuevaCarta">
+      <img src="{{nuevaCarta.imagen}}" width="150" height="200" alt="Nueva carta">
     </div>
   </div>
+  
+  
+  <div class="resultado">
+    <p *ngIf="mensajeResultado">{{ mensajeResultado }}</p>
+  </div>
+
+  <div class="botones">
+    <button (click)="sacarNuevaCarta('mayor')" class="btn">Mayor</button>
+    <button (click)="sacarNuevaCarta('igual')" class="btn">Igual</button>
+    <button (click)="sacarNuevaCarta('menor')" class="btn">Menor</button>
+  </div>
+  
+  <button (click)="reiniciar()" class="btn reiniciar">Reiniciar</button>
+</div>
+
+
+
+
+
+
+
+
+
+
+  
   
   

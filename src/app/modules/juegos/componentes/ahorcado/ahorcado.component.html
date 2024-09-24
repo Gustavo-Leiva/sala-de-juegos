@@ -1,33 +1,53 @@
 <body>
+  <a class="button" [routerLink]="['/home']">
+    <div class="button-box">
+      <span class="button-elem">
+        <svg viewBox="0 0 46 40" xmlns="http://www.w3.org/2000/svg">
+          <path d="M46 20.038c0-.7-.3-1.5-.8-2.1l-16-17c-1.1-1-3.2-1.4-4.4-.3-1.2 1.1-1.2 3.3 0 4.4l11.3 11.9H3c-1.7 0-3 1.3-3 3s1.3 3 3 3h33.1l-11.3 11.9c-1 1-1.2 3.3 0 4.4 1.2 1.1 3.3.8 4.4-.3l16-17c.5-.5.8-1.1.8-1.9z"></path>
+        </svg>
+      </span>
+      <!-- <span class="button-elem">
+        <svg viewBox="0 0 46 40">
+          <path d="M46 20.038c0-.7-.3-1.5-.8-2.1l-16-17c-1.1-1-3.2-1.4-4.4-.3-1.2 1.1-1.2 3.3 0 4.4l11.3 11.9H3c-1.7 0-3 1.3-3 3s1.3 3 3 3h33.1l-11.3 11.9c-1 1-1.2 3.3 0 4.4 1.2 1.1 3.3.8 4.4-.3l16-17c.5-.5.8-1.1.8-1.9z"></path>
+        </svg> -->
+      <!-- </span> -->
+    </div>
+  </a>
+  
+
+
+
+
   <div class="game-container">
     <h1>Ahorcado</h1>
   
     <!-- Mostrar progreso de la palabra -->
     <div class="word-display">
-      <span *ngFor="let char of displayedWord">
+      <span *ngFor="let char of palabraMostrada">
         {{ char }}
       </span>
     </div>
   
     <!-- Mostrar el ahorcado (opcional, basado en errores) -->
     <div class="hangman-image">
-      <img [src]="hangmanImages[errors]" alt="Ahorcado" />
+      <img [src]="imagenesAhorcado[errores]" alt="Ahorcado" />
     </div>
   
     <!-- Teclado de letras -->
-    <div class="letters" *ngIf="!gameOver">
-      <button 
-      *ngFor="let letter of alphabet" 
-      [disabled]="usedLetters.includes(letter)" 
-      (click)="selectLetter(letter)">      
-      {{ letter }}
-      </button>
+    <div class="letters" *ngIf="!juegoTerminado">
+        <button 
+          *ngFor="let letter of abecedario" 
+          [disabled]="letrasUsadas.includes(letter)" 
+          [ngClass]="{'inactivo': letrasUsadas.includes(letter)}" 
+          (click)="seleccionarLetra(letter)">      
+          {{ letter }}
+        </button>
     </div>
   
     <!-- Mostrar mensaje si el jugador gana o pierde -->
-    <div *ngIf="gameOver">
-      <p>{{ message }}</p>
-      <button (click)="restartGame()">Reiniciar</button>
+    <div *ngIf="juegoTerminado">
+      <p>{{ mensaje }}</p>
+      <button class="reiniciar"  (click)="reiniciarJuego()">Reiniciar</button>
     </div>
   </div>
 </body>

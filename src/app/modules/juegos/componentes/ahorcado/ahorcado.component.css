@@ -6,6 +6,41 @@ body {
   font-family: 'Roboto', sans-serif; /* Fuente moderna y legible */
 }
 
+
+.button-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro semi-transparente */
+  padding: 10px;
+  border-radius: 50px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.button-box:hover {
+  background-color: rgba(0, 0, 0, 0.7); /* Fondo más oscuro al hacer hover */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.button-elem {
+  display: block;
+  width: 24px;
+  height: 24px;
+  margin: 0 12px;
+  transform: rotate(180deg);
+  fill: #ffffff;
+  transition: fill 0.3s ease, transform 0.3s ease;
+}
+
+.button-elem:hover {
+  fill: #00bcd4;
+  transform: rotate(180deg) scale(1.1);
+}
+
 /* Contenedor del juego */
 .game-container {
   text-align: center;
@@ -25,14 +60,6 @@ h1 {
 }
 
 /* Estilo de la palabra */
-.word-display {
-  font-size: 2rem;
-  margin-bottom: 20px;
-  display: flex;
-  justify-content: center;
-  gap: 10px; /* Espaciado entre las letras */
-}
-
 .word-display span {
   display: inline-block;
   width: 50px;
@@ -44,6 +71,19 @@ h1 {
   background-color: #f0f4f8; /* Fondo gris claro */
   color: #333; /* Color del texto */
   border-radius: 10px; /* Bordes más redondeados */
+  transition: background-color 0.3s ease; /* Transición para el hover */
+}
+
+.word-display span:hover {
+  background-color: #4a90e2; /* Fondo azul brillante al pasar el ratón */
+  color: #ffffff; /* Color de texto blanco al pasar el ratón */
+  cursor: pointer;
+}
+
+.word-display span.inactivo {
+  pointer-events: none; /* Desactiva eventos para letras ya usadas */
+  background-color: #e0e0e0; /* Color de fondo para letras usadas */
+  color: #999; /* Color de texto para letras usadas */
 }
 
 /* Estilo del teclado de letras */
@@ -73,11 +113,29 @@ h1 {
   transform: scale(1.1); /* Aumenta el tamaño del botón al pasar el ratón */
 }
 
-button[disabled] {
+button:disabled {
   background-color: #e0e0e0; /* Fondo gris claro para los botones deshabilitados */
   color: #999; /* Color de texto gris claro */
   cursor: not-allowed; /* Mostrar que no se puede hacer clic */
+  pointer-events: none; /* Desactiva eventos de ratón */
 }
+
+/* Desactivar el hover para botones deshabilitados */
+button:disabled:hover {
+  background-color: #e0e0e0; /* Mantener el mismo fondo gris claro */
+  color: #999; /* Mantener el color gris claro */
+  transform: none; /* Sin escalado al hacer hover */
+}
+
+.inactivo {
+  pointer-events: none; /* Desactiva eventos para letras ya usadas */
+  background-color: #e0e0e0; /* Color de fondo para letras usadas */
+  color: #999; /* Color de texto para letras usadas */
+}
+
+
+
+
 
 /* Estilo de la imagen del ahorcado */
 .hangman-image {
@@ -91,6 +149,30 @@ button[disabled] {
   height: auto;  /* Mantiene la proporción de la imagen */
   max-height: 300px; /* Limita la altura máxima de la imagen */
 }
+
+button.reiniciar {
+  font-size: 1.5rem; /* Tamaño de fuente más grande */
+  padding: 10px 20px; /* Espaciado interno más amplio */
+  background-color: #4a90e2; /* Fondo azul brillante */
+  color: #ffffff; /* Texto blanco */
+  border: none; /* Sin borde */
+  border-radius: 10px; /* Bordes redondeados */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra sutil */
+  cursor: pointer; /* Cambia el cursor al pasar el ratón */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Transiciones suaves */
+}
+
+button.reiniciar:hover {
+  background-color: #357ABD; /* Fondo azul más oscuro al pasar el ratón */
+  transform: scale(1.05); /* Aumenta el tamaño del botón */
+}
+
+button.reiniciar:disabled {
+  background-color: #e0e0e0; /* Fondo gris claro para botón deshabilitado */
+  color: #999; /* Color de texto gris claro */
+  cursor: not-allowed; /* Cursor de no permitido */
+}
+
 
 /* Estilos responsivos */
 @media screen and (max-width: 768px) {
@@ -106,4 +188,10 @@ button[disabled] {
     height: 50px;
     font-size: 1.2rem;
   }
+
+  .letters button:disabled:hover {
+    background-color: #e0e0e0; /* Fondo gris claro al hacer hover */
+    color: #999; /* Color de texto gris claro al hacer hover */
+  }
+  
 }

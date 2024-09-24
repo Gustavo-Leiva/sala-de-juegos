@@ -4,11 +4,13 @@ import { AuthService } from '../../services/auth.service'; // tener el servicio 
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 import { User } from '@angular/fire/auth';
+import { ChatComponent } from '../../modules/juegos/componentes/chat/chat.component';
+import { JuegosModule } from '../../modules/juegos/juegos.module';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ChatComponent],
   templateUrl: './home.component.html',
   // styleUrl: './home.component.css'
   styleUrls: ['./home.component.css']

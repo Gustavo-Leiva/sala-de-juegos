@@ -1,1 +1,54 @@
-<p>chat works!</p>
+<!-- 
+<div class="chat-toggle" (click)="toggleChat()" *ngIf="isChatHidden == true">Chat</div>
+
+<div class="chat-card" *ngIf="isChatHidden == false">
+    <div class="chat-header" (click)="toggleChat()">
+     <div class="h2">Chat</div>
+    </div>
+    <div class="chat-body" #chatBody>
+      <span *ngFor="let item of mensajesBD">
+        <div class="message incoming" *ngIf="auth.getUserEmail() !== item.emisor">
+          <p class="emisor">{{item.emisor}} -- {{item.fecha}}</p>
+          <p class="mensajeEntrante">{{item.texto}}</p>
+        </div>
+        <div class="message outgoing" *ngIf="auth.getUserEmail() === item.emisor">
+          <p class="fecha">{{item.fecha}}</p>
+          <p class="mensaje">{{item.texto}}</p>
+        </div>
+      </span>
+    </div> 
+    <div class="chat-footer">
+      <input placeholder="Type your message" type="text" [(ngModel)]="mensajeNuevo">
+      <button (click)="EnviarMensaje()">Enviar</button>
+    </div>
+  </div> -->
+
+  <div class="chat-toggle" (click)="toggleChat()" *ngIf="isChatHidden == true">💬 Chat</div>
+
+<div class="chat-card" *ngIf="isChatHidden == false">
+    <div class="chat-header" (click)="toggleChat()">
+        <div class="h2">Chat</div>
+        <button class="close-button" (click)="toggleChat()">✖️</button>
+    </div>
+    <div class="chat-body" #chatBody>
+        <span *ngFor="let item of mensajesBD">
+            <div class="message incoming" *ngIf="auth.getUserEmail() !== item.emisor">
+                <p class="emisor">{{item.emisor}} -- {{item.fecha}}</p>
+                <p class="mensajeEntrante">{{item.texto}}</p>
+            </div>
+            <div class="message outgoing" *ngIf="auth.getUserEmail() === item.emisor">
+                <p class="fecha">{{item.fecha}}</p>
+                <p class="mensaje">{{item.texto}}</p>
+            </div>
+        </span>
+    </div>
+    <div class="chat-footer">
+        <input placeholder="Escribe tu mensaje..." type="text" [(ngModel)]="mensajeNuevo">
+        <button (click)="EnviarMensaje()">Enviar</button>
+    </div>
+</div>
+
+  
+  
+  
+  

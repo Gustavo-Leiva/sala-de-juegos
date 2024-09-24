@@ -1,24 +1,22 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-ahorcado',
   standalone: false,
-  // imports: [],
   templateUrl: './ahorcado.component.html',
-  // styleUrl: './ahorcado.component.css'
   styleUrls: ['./ahorcado.component.css']
 })
 export class AhorcadoComponent implements OnInit {
-  words: string[] = ['ANGULAR', 'JAVASCRIPT', 'TYPESCRIPT', 'PROGRAMACION', 'AHORCADO']; // Lista de palabras
-  word: string = ''; // La palabra secreta seleccionada al azar
-  displayedWord: string[] = []; // El progreso de la palabra
-  alphabet: string[] = []; // Letras del abecedario
-  usedLetters: string[] = []; // Letras ya seleccionadas
-  errors = 0; // Número de errores cometidos
-  maxErrors = 6; // Máximo de errores permitidos
-  gameOver = false;
-  message = ''; // Mensaje de victoria o derrota
-  hangmanImages: string[] = [ // Imágenes del ahorcado
+  palabras: string[] = ['ANGULAR', 'JAVASCRIPT', 'TYPESCRIPT', 'PROGRAMACION', 'AHORCADO']; // Lista de palabras
+  palabraSecreta: string = ''; // La palabra secreta seleccionada al azar
+  palabraMostrada: string[] = []; // El progreso de la palabra
+  abecedario: string[] = []; // Letras del abecedario
+  letrasUsadas: string[] = []; // Letras ya seleccionadas
+  errores = 0; // Número de errores cometidos
+  maxErrores = 6; // Máximo de errores permitidos
+  juegoTerminado = false;
+  mensaje = ''; // Mensaje de victoria o derrota
+  imagenesAhorcado: string[] = [ // Imágenes del ahorcado
     '/assets/imagenes/etapasAhorcado/ahorcado0.png',
     '/assets/imagenes/etapasAhorcado/ahorcado1.png',
     '/assets/imagenes/etapasAhorcado/ahorcado2.png',
@@ -29,57 +27,57 @@ export class AhorcadoComponent implements OnInit {
   ];
 
   constructor() {
-    this.alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+    this.abecedario = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
   }
 
   ngOnInit() {
-    this.restartGame();
+    this.reiniciarJuego();
   }
 
   // Inicializa el juego y selecciona una nueva palabra al azar
-  restartGame() {
+  reiniciarJuego() {
     // Selecciona una palabra al azar de la lista
-    this.word = this.words[Math.floor(Math.random() * this.words.length)];
+    this.palabraSecreta = this.palabras[Math.floor(Math.random() * this.palabras.length)];
     
     // Inicializa la palabra mostrada con guiones bajos
-    this.displayedWord = this.word.split('').map(() => '_');
+    this.palabraMostrada = this.palabraSecreta.split('').map(() => '_');
     
-    this.usedLetters = [];
-    this.errors = 0;
-    this.gameOver = false;
-    this.message = '';
+    this.letrasUsadas = [];
+    this.errores = 0;
+    this.juegoTerminado = false;
+    this.mensaje = '';
   }
 
   // Se ejecuta cuando se selecciona una letra
-  selectLetter(letter: string) {
-    if (this.gameOver) {
+  seleccionarLetra(letra: string) {
+    if (this.juegoTerminado) {
       return; // Si el juego terminó, no permitir más interacción
     }
 
     // Agrega la letra a la lista de letras usadas
-    this.usedLetters.push(letter);
+    this.letrasUsadas.push(letra);
 
     // Verificar si la letra está en la palabra
-    if (this.word.includes(letter)) {
-      this.updateDisplayedWord(letter);
-      if (this.displayedWord.join('') === this.word) {
-        this.gameOver = true;
-        this.message = '¡Ganaste!';
+    if (this.palabraSecreta.includes(letra)) {
+      this.actualizarPalabraMostrada(letra);
+      if (this.palabraMostrada.join('') === this.palabraSecreta) {
+        this.juegoTerminado = true;
+        this.mensaje = '¡Ganaste!';
       }
     } else {
-      this.errors++;
-      if (this.errors >= this.maxErrors) {
-        this.gameOver = true;
-        this.message = '¡Perdiste! La palabra era: ' + this.word;
+      this.errores++;
+      if (this.errores >= this.maxErrores) {
+        this.juegoTerminado = true;
+        this.mensaje = '¡Perdiste! La palabra era: ' + this.palabraSecreta;
       }
     }
   }
 
   // Actualiza la palabra mostrada cuando se acierta una letra
-  updateDisplayedWord(letter: string) {
-    for (let i = 0; i < this.word.length; i++) {
-      if (this.word[i] === letter) {
-        this.displayedWord[i] = letter;
+  actualizarPalabraMostrada(letra: string) {
+    for (let i = 0; i < this.palabraSecreta.length; i++) {
+      if (this.palabraSecreta[i] === letra) {
+        this.palabraMostrada[i] = letra;
       }
     }
   }
