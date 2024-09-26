@@ -1,0 +1,25 @@
+<div class="resultado-container">
+    <h2 class="titulo-resultados">Resultados del Juego</h2>
+    <table class="tabla-resultados">
+      <thead>
+        <tr>
+          <th class="encabezado">Usuario</th>
+          <th class="encabezado">Juego</th>
+          <th class="encabezado">Puntos</th>
+          <th class="encabezado">Fecha</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let resultado of resultados" class="resultado-item">
+          <td class="usuario">{{ resultado.usuario }}</td>
+          <td class="juego">{{ resultado.juego }}</td>
+          <td class="puntaje">{{ resultado.puntaje }}</td>
+          <td class="fecha">{{ resultado.fecha }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  
+  
+  

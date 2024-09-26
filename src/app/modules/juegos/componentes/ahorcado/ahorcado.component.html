@@ -6,49 +6,60 @@
           <path d="M46 20.038c0-.7-.3-1.5-.8-2.1l-16-17c-1.1-1-3.2-1.4-4.4-.3-1.2 1.1-1.2 3.3 0 4.4l11.3 11.9H3c-1.7 0-3 1.3-3 3s1.3 3 3 3h33.1l-11.3 11.9c-1 1-1.2 3.3 0 4.4 1.2 1.1 3.3.8 4.4-.3l16-17c.5-.5.8-1.1.8-1.9z"></path>
         </svg>
       </span>
-      <!-- <span class="button-elem">
-        <svg viewBox="0 0 46 40">
-          <path d="M46 20.038c0-.7-.3-1.5-.8-2.1l-16-17c-1.1-1-3.2-1.4-4.4-.3-1.2 1.1-1.2 3.3 0 4.4l11.3 11.9H3c-1.7 0-3 1.3-3 3s1.3 3 3 3h33.1l-11.3 11.9c-1 1-1.2 3.3 0 4.4 1.2 1.1 3.3.8 4.4-.3l16-17c.5-.5.8-1.1.8-1.9z"></path>
-        </svg> -->
-      <!-- </span> -->
     </div>
   </a>
-  
-
-
-
 
   <div class="game-container">
     <h1>Ahorcado</h1>
-  
-    <!-- Mostrar progreso de la palabra -->
+
     <div class="word-display">
       <span *ngFor="let char of palabraMostrada">
         {{ char }}
       </span>
     </div>
-  
-    <!-- Mostrar el ahorcado (opcional, basado en errores) -->
+
     <div class="hangman-image">
       <img [src]="imagenesAhorcado[errores]" alt="Ahorcado" />
     </div>
-  
-    <!-- Teclado de letras -->
+
+     <!-- Muestra la cantidad de respuestas correctas -->
+     <div class="correct-answers">
+      <p>Respuestas Correctas: {{ respuestasCorrectas }}</p>
+    </div>
+
     <div class="letters" *ngIf="!juegoTerminado">
-        <button 
-          *ngFor="let letter of abecedario" 
-          [disabled]="letrasUsadas.includes(letter)" 
-          [ngClass]="{'inactivo': letrasUsadas.includes(letter)}" 
-          (click)="seleccionarLetra(letter)">      
-          {{ letter }}
-        </button>
+      <button 
+        *ngFor="let letter of abecedario" 
+        [disabled]="letrasUsadas.includes(letter)" 
+        [ngClass]="{'inactivo': letrasUsadas.includes(letter)}" 
+        (click)="seleccionarLetra(letter)" 
+        [attr.aria-label]="'Seleccionar letra ' + letter">
+        {{ letter }}
+      </button>
     </div>
-  
-    <!-- Mostrar mensaje si el jugador gana o pierde -->
+
+    <!-- <div *ngIf="juegoTerminado">
+      <p [ngClass]="{'ganaste': mensaje === 'GANASTE!!!', 'perdiste': mensaje === 'PERDISTE :/'}">{{ mensaje }}</p>
+      <button class="reiniciar" (click)="reiniciarJuego()">Reiniciar</button>
+    </div> -->
+
+    <!-- <div *ngIf="juegoTerminado">
+      <p [ngClass]="{'ganaste': mensaje === 'GANASTE!!!', 'perdiste': mensaje === 'PERDISTE :/'}">{{ mensaje }}</p>
+      <button class="reiniciar" (click)="reiniciarJuego()">Reiniciar</button>
+      <button class="salir" (click)="salirJuego()">Salir</button>
+    </div> -->
+
+
     <div *ngIf="juegoTerminado">
-      <p>{{ mensaje }}</p>
-      <button class="reiniciar"  (click)="reiniciarJuego()">Reiniciar</button>
+      <p [ngClass]="{'ganaste': mensaje === 'GANASTE!!!', 'perdiste': mensaje === 'PERDISTE :/'}">{{ mensaje }}</p>
+      
+      <div class="button-container">
+        <button class="reiniciar" (click)="reiniciarJuego()">Reiniciar</button>
+        <button class="salir" (click)="salirJuego()">Salir</button>
+      </div>
     </div>
+
+    
   </div>
 </body>
 

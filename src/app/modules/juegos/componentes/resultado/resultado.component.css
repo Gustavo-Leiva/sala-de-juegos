@@ -1,0 +1,61 @@
+.resultado-container {
+    max-height:400px; /* Establece una altura máxima para el contenedor */
+    overflow-y: auto; /* Habilita el desplazamiento vertical */
+    overflow-x: auto;
+    border: 1px solid #ccc; /* Agrega un borde para que se vea el contenedor */
+    padding: 10px; /* Agrega un poco de padding */
+    border-radius: 5px; /* Opcional: bordes redondeados */
+    background-color: #f9f9f9; /* Color de fondo del contenedor */
+  }
+  
+  .titulo-resultados {
+    text-align: center; /* Centrar título */
+    font-size: 24px; /* Tamaño de fuente */
+    color: #333; /* Color del texto */
+    margin-bottom: 20px; /* Espacio inferior */
+  }
+  
+  .tabla-resultados {
+    width: 100%; /* Asegura que la tabla ocupe el 100% del contenedor */
+    border-collapse: collapse; /* Mejora el estilo de la tabla */
+  }
+  
+  .encabezado {
+    background-color: #007bff; /* Color de fondo para encabezados */
+    color: white; /* Color de texto blanco */
+    text-align: left; /* Alinear texto a la izquierda */
+    padding: 10px; /* Espaciado interno */
+  }
+  
+  .resultado-item {
+    background-color: #fff; /* Fondo blanco para cada resultado */
+    border-bottom: 1px solid #e0e0e0; /* Borde inferior */
+    transition: background-color 0.3s ease; /* Transición suave para el hover */
+  }
+
+  .resultado-item:nth-child(even) {
+    background-color: #f2f2f2; /* Color alternativo para filas pares */
+  }
+  
+  .resultado-item:hover {
+    background-color: #f1f1f1; /* Color de fondo al pasar el ratón */
+  }
+  
+  .usuario {
+    font-weight: bold; /* Negrita para el usuario */
+    color: #007bff; /* Color para el nombre de usuario */
+  }
+  
+  .juego {
+    color: #28a745; /* Color verde para el nombre del juego */
+  }
+  
+  .puntaje {
+    color: #dc3545; /* Color rojo para el puntaje */
+  }
+  
+  .fecha {
+    color: #6c757d; /* Color gris para la fecha */
+    font-size: 0.9em; /* Tamaño de fuente más pequeño */
+  }
+  

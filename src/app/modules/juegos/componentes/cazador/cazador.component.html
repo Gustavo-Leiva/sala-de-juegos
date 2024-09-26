@@ -1,0 +1,55 @@
+<div class="pantalla-completa">
+    <a class="button" [routerLink]="['/home']">
+        <div class="button-box">
+            <span class="button-elem">
+                <!-- Icono de vuelta a Home -->
+                <svg viewBox="0 0 46 40" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M46 20.038c0-.7-.3-1.5-.8-2.1l-16-17c-1.1-1-3.2-1.4-4.4-.3-1.2 1.1-1.2 3.3 0 4.4l11.3 11.9H3c-1.7 0-3 1.3-3 3s1.3 3 3 3h33.1l-11.3 11.9c-1 1-1.2 3.3 0 4.4 1.2 1.1 3.3.8 4.4-.3l16-17c.5-.5.8-1.1.8-1.9z"></path>
+                  </svg>
+            </span>
+        </div>
+    </a>
+
+    <h1 class="titulo-juego">Cazador de Círculos</h1>
+    
+    <!-- <h2>Puntaje: {{ puntaje }}</h2> -->
+
+    <h2 *ngIf="!gameOver">Puntaje: {{ puntaje }}</h2>
+    
+    <div class="temporizador">
+        <p>Tiempo restante: {{ tiempoRestante }} segundos</p>
+        <div class="barra-tiempo">
+            <div class="barra-progreso" [style.width]="calcularProgreso() + '%'"></div>
+        </div>
+    </div>
+
+    <div class="juego-figuras">
+        <div class="contenedor-juego" *ngIf="!gameOver">
+            <div 
+                class="figura circulo" 
+                [style.top]="posY + 'px'" 
+                [style.left]="posX + 'px'" 
+                (click)="cazarFigura()">
+            </div>
+        </div>    
+    </div>
+    
+    <!-- <button *ngIf="gameOver" class="reiniciar-btn" (click)="reiniciarJuego()">Reiniciar</button>
+    <p *ngIf="gameOver">¡Juego Terminado! Puntaje final: {{ puntaje }}</p> -->
+
+    <!-- Este contenedor se mostrará en el centro cuando termine el juego -->
+  <div *ngIf="gameOver" class="game-over-container">
+    <p class="juego-terminado">¡Juego Terminado! Puntaje final: {{ puntaje }}</p>
+    <button class="reiniciar-btn" (click)="reiniciarJuego()">Reiniciar</button>
+  </div>
+</div>
+
+
+
+
+  
+  
+  
+  
+  
+  

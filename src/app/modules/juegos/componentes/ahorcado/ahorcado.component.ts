@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router'; // Importa Router
+import { ResultadoService } from '../../../../services/resultado.service'; // Asegúrate de importar tu servicio
 
 @Component({
   selector: 'app-ahorcado',
@@ -7,16 +9,28 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./ahorcado.component.css']
 })
 export class AhorcadoComponent implements OnInit {
-  palabras: string[] = ['ANGULAR', 'JAVASCRIPT', 'TYPESCRIPT', 'PROGRAMACION', 'AHORCADO']; // Lista de palabras
-  palabraSecreta: string = ''; // La palabra secreta seleccionada al azar
-  palabraMostrada: string[] = []; // El progreso de la palabra
-  abecedario: string[] = []; // Letras del abecedario
-  letrasUsadas: string[] = []; // Letras ya seleccionadas
-  errores = 0; // Número de errores cometidos
-  maxErrores = 6; // Máximo de errores permitidos
-  juegoTerminado = false;
-  mensaje = ''; // Mensaje de victoria o derrota
-  imagenesAhorcado: string[] = [ // Imágenes del ahorcado
+  // Propiedades del juego
+  private readonly palabras: string[] = [
+    'ANGULAR', 
+    'JAVASCRIPT', 
+    'TYPESCRIPT', 
+    'PROGRAMACION', 
+    'AHORCADO'
+  ];
+  
+  public palabraSecreta: string = '';
+  public palabraMostrada: string[] = [];
+  public abecedario: string[] = [];
+  public letrasUsadas: string[] = [];
+  public errores: number = 0;
+  private readonly maxErrores: number = 6;
+  public juegoTerminado: boolean = false;
+  public mensaje: string = '';
+  public respuestasCorrectas: number = 0; // Contador de respuestas correctas
+  private resultadoGuardado: boolean = false; // Nueva variable para controlar el estado
+
+  // Rutas de las imágenes del ahorcado
+  public readonly imagenesAhorcado: string[] = [
     '/assets/imagenes/etapasAhorcado/ahorcado0.png',
     '/assets/imagenes/etapasAhorcado/ahorcado1.png',
     '/assets/imagenes/etapasAhorcado/ahorcado2.png',
@@ -26,59 +40,119 @@ export class AhorcadoComponent implements OnInit {
     '/assets/imagenes/etapasAhorcado/ahorcado6.png'
   ];
 
-  constructor() {
-    this.abecedario = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
-  }
+  constructor(private resultadoService: ResultadoService, private router: Router) {}
 
   ngOnInit() {
-    this.reiniciarJuego();
+    this.iniciarJuego(); // Iniciar juego al cargar el componente
   }
 
-  // Inicializa el juego y selecciona una nueva palabra al azar
-  reiniciarJuego() {
-    // Selecciona una palabra al azar de la lista
-    this.palabraSecreta = this.palabras[Math.floor(Math.random() * this.palabras.length)];
-    
-    // Inicializa la palabra mostrada con guiones bajos
-    this.palabraMostrada = this.palabraSecreta.split('').map(() => '_');
-    
+  // Asegúrate de que el método iniciarJuego restablezca todas las propiedades necesarias
+ private iniciarJuego(): void {
+    this.palabraSecreta = this.seleccionarPalabraSecreta();
+    this.palabraMostrada = Array(this.palabraSecreta.length).fill('_');
+    this.abecedario = this.generarAbecedario();
     this.letrasUsadas = [];
     this.errores = 0;
     this.juegoTerminado = false;
     this.mensaje = '';
+    this.respuestasCorrectas = 0; // Reiniciar el contador al iniciar el juego
+}
+
+  private seleccionarPalabraSecreta(): string {
+    return this.palabras[Math.floor(Math.random() * this.palabras.length)].toUpperCase();
   }
 
-  // Se ejecuta cuando se selecciona una letra
-  seleccionarLetra(letra: string) {
-    if (this.juegoTerminado) {
-      return; // Si el juego terminó, no permitir más interacción
-    }
+  private generarAbecedario(): string[] {
+    return 'ABCDEFGHIJKLMNÑOPQRSTUVWXYZ'.split('');
+  }
 
-    // Agrega la letra a la lista de letras usadas
+  // Modifica el método seleccionarLetra
+  public seleccionarLetra(letra: string): void {
+    // Verifica si la letra ya fue usada o si el juego ha terminado
+    if (this.letrasUsadas.includes(letra) || this.juegoTerminado) return;
+
+    // Añade la letra seleccionada a las letras usadas
     this.letrasUsadas.push(letra);
 
-    // Verificar si la letra está en la palabra
+    // Verifica si la letra está en la palabra secreta
     if (this.palabraSecreta.includes(letra)) {
-      this.actualizarPalabraMostrada(letra);
-      if (this.palabraMostrada.join('') === this.palabraSecreta) {
-        this.juegoTerminado = true;
-        this.mensaje = '¡Ganaste!';
-      }
-    } else {
-      this.errores++;
-      if (this.errores >= this.maxErrores) {
-        this.juegoTerminado = true;
-        this.mensaje = '¡Perdiste! La palabra era: ' + this.palabraSecreta;
-      }
-    }
-  }
+        this.actualizarPalabraMostrada(letra);
 
-  // Actualiza la palabra mostrada cuando se acierta una letra
-  actualizarPalabraMostrada(letra: string) {
+        // Verifica si se ha ganado
+        if (!this.palabraMostrada.includes('_')) {
+            this.respuestasCorrectas++; // Solo sumar 1 punto por palabra completa
+            this.mensaje = 'GANASTE!!! ¡Sigue jugando!';
+            // Aquí puedes iniciar una nueva ronda
+            this.iniciarNuevaRonda(); // Reiniciar el juego para una nueva ronda
+        }
+    } else {
+        this.errores++;
+        // Verifica si se ha perdido
+        if (this.errores >= this.maxErrores) {
+            this.finalizarJuego('PERDISTE :/');
+        }
+    }
+}
+
+
+private iniciarNuevaRonda(): void {
+    // Aquí se restablecen las propiedades necesarias para iniciar una nueva ronda
+    this.palabraSecreta = this.seleccionarPalabraSecreta();
+    this.palabraMostrada = Array(this.palabraSecreta.length).fill('_');
+    this.letrasUsadas = [];
+    this.errores = 0; // Reiniciar errores para la nueva ronda
+    this.juegoTerminado = false; // Asegurarse de que el juego no esté terminado
+    this.mensaje = ''; // Limpiar el mensaje
+}
+
+
+  private actualizarPalabraMostrada(letra: string): void {
     for (let i = 0; i < this.palabraSecreta.length; i++) {
       if (this.palabraSecreta[i] === letra) {
         this.palabraMostrada[i] = letra;
       }
     }
   }
+
+  private finalizarJuego(mensajeFinal: string): void {
+    if (!this.juegoTerminado) { // Asegúrate de que el juego no esté ya terminado
+        this.juegoTerminado = true;
+        this.mensaje = mensajeFinal;
+        this.guardarResultado(); // Guardar resultado al finalizar el juego
+    }
 }
+
+
+  private guardarResultado(): void {
+    this.resultadoService.guardarResultado('Ahorcado', this.respuestasCorrectas)
+      .then(() => console.log('Resultado guardado correctamente'))
+      .catch(error => console.error('Error al guardar el resultado:', error));
+  }
+
+// Reinicia el juego completamente
+public reiniciarJuego(): void {
+  this.iniciarJuego(); // Reiniciar el juego
+}
+
+
+
+public salirJuego(): void {
+  if (!this.juegoTerminado && !this.resultadoGuardado) { // Verifica que no se haya guardado antes
+      console.log('Guardando resultado y saliendo del juego...'); // Log para depuración
+      this.guardarResultado(); // Guardar resultado al salir
+      this.resultadoGuardado = true; // Marca el resultado como guardado
+  }
+
+  this.juegoTerminado = true; // Finaliza el juego
+  this.mensaje = 'Juego terminado. Gracias por jugar!';
+
+  // Redirigir a la página de inicio después de guardar el resultado
+  setTimeout(() => {
+      // Aquí puedes usar el router para navegar al home
+      this.router.navigate(['/home']); // Asegúrate de inyectar el Router en el constructor
+  }, 1000); // Espera un segundo antes de redirigir (opcional)
+}
+
+}
+
+

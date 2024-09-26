@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ChatService } from '../../../../services/chat.service';
@@ -24,6 +24,8 @@ export class ChatComponent implements OnInit{
   public mensajesBD : Mensaje[] = [];
   isChatHidden: boolean = true;
 
+ 
+
   @ViewChild('chatBody')
   private chatBody: ElementRef | undefined;
 
@@ -37,12 +39,19 @@ export class ChatComponent implements OnInit{
     console.log(this.mensajesBD);
   }
 
+
+
   EnviarMensaje() {
     if (this.mensajeNuevo !== "") {
       this.mensaje.emisor = this.auth.getUserEmail() ?? 'Usuario desconocido'; // Asigna un valor por defecto si es null
       this.mensaje.fecha = this.formatDate(this.fecha);
       this.mensaje.texto = this.mensajeNuevo;
       this.chat.agregarChat(this.mensaje);
+      
+       // Vaciar el cuadro de texto después de enviar el mensaje
+      this.mensajeNuevo = "";
+  
+      
     }
   }
   

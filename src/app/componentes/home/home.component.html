@@ -13,7 +13,7 @@
           <a href="/juegos/ahorcado" class="dropdown-item">Ahorcado</a>
           <a href="/juegos/mayor-menor" class="dropdown-item">Mayor o Menor</a>
           <a href="/juegos/preguntados" class="dropdown-item">Preguntados</a>
-          <a href="/juegos/juego-propio" class="dropdown-item">Mi Juego</a>
+          <a href="/juegos/cazador" class="dropdown-item">Mi Juego</a>
         </div>
       </div>
     </div>
@@ -47,25 +47,19 @@
         <p>Responde preguntas y demuestra tu conocimiento.</p>
         <img src="assets/imagenes/preguntados.jpg" alt="Preguntados">
       </div>
-      <div class="game-card" (click)="goTo('juego-propio')">
-        <h2>Mi Juego</h2>
+      <div class="game-card" (click)="NavegarJuegos('cazador')">
+        <h2>Cazador</h2>
         <p>Juega al juego personalizado que he creado.</p>
+        <img src="assets/imagenes/cazador.avif" alt="Cazador">
       </div>
-      <div class="game-card" (click)="goTo('resultados')">
+      <div class="game-card" (click)="NavegarJuegos('resultado')">
         <h2>Resultados</h2>
         <p>Ver los listados de resultados de los jugadores.</p>
+        <img src="assets/imagenes/resultado.jpg" alt="resultados">
       </div>
     </div>
   </div>
-  <!-- <ng-container *ngIf="authService.getUser() != null">
-    <div class="tooltip-container">
-      <span class="text">Usuario logueado</span>
-    </div> 
-    <div class="chat">
-      <app-chat></app-chat> 
-    </div>
-  </ng-container> -->
-
+ 
   <ng-container *ngIf="authService.getUser() != null">
     <div class="tooltip-container">
       <span class="text">Usuario logueado</span>

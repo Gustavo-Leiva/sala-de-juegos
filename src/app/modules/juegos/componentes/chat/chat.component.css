@@ -1,81 +1,4 @@
-/* .chat {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 320px;
-  max-height: 400px;
-  background-color: #ffffff;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  border-radius: 12px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-.chat-header {
-  background-color: #1e88e5;
-  color: white;
-  padding: 12px;
-  font-size: 16px;
-  font-weight: bold;
-  text-align: center;
-  border-top-left-radius: 12px;
-  border-top-right-radius: 12px;
-}
-
-.chat-body {
-  flex: 1;
-  padding: 10px;
-  overflow-y: auto;
-  background-color: #f9f9f9;
-}
-
-.chat-footer {
-  display: flex;
-  padding: 10px;
-  background-color: #f1f1f1;
-  border-bottom-left-radius: 12px;
-  border-bottom-right-radius: 12px;
-}
-
-.chat-footer input {
-  flex: 1;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  margin-right: 10px;
-  font-size: 14px;
-}
-
-.chat-footer button {
-  background-color: #1e88e5;
-  color: white;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 14px;
-}
-
-.chat-footer button:hover {
-  background-color: #1565c0;
-}
-
-.chat-message {
-  padding: 6px 10px;
-  margin: 4px 0;
-  border-radius: 8px;
-  background-color: #e3f2fd;
-  font-size: 14px;
-  word-wrap: break-word;
-}
-
-.chat-message-user {
-  background-color: #bbdefb;
-} */
-
-
+/* 
 .chat-toggle {
   position: fixed;
   bottom: 20px;
@@ -97,7 +20,7 @@
 .chat-card {
   position: fixed;
   bottom: 80px; /* Altura del botón de chat */
-  right: 20px;
+  /* right: 20px;
   width: 300px;
   max-height: 400px;
   background-color: white;
@@ -180,4 +103,110 @@
 
 .chat-footer button:hover {
   background-color: #1565c0;
+} */ 
+/* Botón que despliega el chat */
+.chat-toggle {
+  position: fixed;
+  bottom: 20px;
+  right: 20px; /* Ajustado para que se vea a la derecha */
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 20px;
+  cursor: pointer;
+  z-index: 100;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-size: 16px;
+}
+
+/* Contenedor principal del chat */
+.chat-card {
+  position: fixed;
+  bottom: 20px;
+  right: 20px; /* Ajustado para que el chat aparezca a la derecha */
+  width: 300px;
+  max-height: 400px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 101;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Estilo para el encabezado del chat */
+.chat-header {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* Botón para cerrar el chat */
+.close-button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+/* Cuerpo del chat (donde están los mensajes) */
+.chat-body {
+  padding: 10px;
+  flex-grow: 1;
+  overflow-y: auto;
+  background-color: #f9f9f9;
+}
+
+/* Mensajes entrantes */
+.message.incoming {
+  background-color: #e1ffc7;
+  padding: 8px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+/* Mensajes salientes */
+.message.outgoing {
+  background-color: #daf8ff;
+  padding: 8px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  text-align: right;
+}
+
+/* Footer del chat (donde se escribe el mensaje) */
+.chat-footer {
+  display: flex;
+  padding: 10px;
+  background-color: #f1f1f1;
+  border-top: 1px solid #ddd;
+}
+
+.chat-footer input {
+  flex-grow: 1;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.chat-footer button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 5px;
+}
+
+.chat-footer button:hover {
+  background-color: #45a049;
 }

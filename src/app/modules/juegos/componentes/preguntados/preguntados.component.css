@@ -1,0 +1,167 @@
+.button-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro semi-transparente */
+    padding: 10px;
+    border-radius: 50px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .button-box:hover {
+    background-color: rgba(0, 0, 0, 0.7); /* Fondo más oscuro al hacer hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  .button-elem {
+    display: block;
+    width: 24px;
+    height: 24px;
+    margin: 0 12px;
+    transform: rotate(180deg);
+    fill: #ffffff;
+    transition: fill 0.3s ease, transform 0.3s ease;
+  }
+  
+  .button-elem:hover {
+    fill: #00bcd4;
+    transform: rotate(180deg) scale(1.1);
+  }
+
+
+
+/* Estilos del contenedor principal */
+.preguntados-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background-color: #f0f4f8;
+    min-height: 100vh;
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  /* Título del juego */
+  h1 {
+    font-size: 3em;
+    font-weight: bold;
+    color: #343a40;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  /* Estilos del contador de tiempo */
+  .timer p {
+    font-size: 1.2em;
+    background-color: #343a40;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+  }
+  
+  /* Estilos del título de la categoría */
+.categoria {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #495057;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+
+  .contador-respuestas {
+    background-color: #f0f0f0; /* Color de fondo claro */
+    border: 2px solid #4CAF50; /* Borde verde */
+    border-radius: 5px; /* Bordes redondeados */
+    padding: 10px 15px; /* Espaciado interno */
+    margin: 20px 0; /* Espaciado externo */
+    text-align: center; /* Centrar texto */
+    font-family: 'Arial', sans-serif; /* Fuente del texto */
+    font-size: 1.2em; /* Tamaño de fuente */
+    color: #333; /* Color del texto */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Sombra para efecto 3D */
+  }
+  
+  .contador-respuestas p {
+    margin: 0; /* Quitar margen del párrafo */
+    font-weight: bold; /* Hacer el texto más grueso */
+  }
+  
+  
+  /* Tarjeta de pregunta */
+  .preguntados-card {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
+  }
+  
+  /* Pregunta */
+  .pregunta h3 {
+    font-size: 1.5em;
+    margin-bottom: 15px;
+    color: #495057;
+  }
+  
+  /* Imagen relacionada a la pregunta */
+  .imagen-pregunta {
+    max-width: 100%;
+    border-radius: 10px;
+    margin: 15px 0;
+  }
+  
+  /* Botones de opciones */
+  .opciones button {
+    display: inline-block;
+    margin: 10px;
+    padding: 15px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  
+  .opciones button:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Resultado del juego */
+  .resultado p {
+    margin-top: 20px;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #28a745;
+  }
+  
+  /* Botón de reiniciar */
+  .reiniciar-btn {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 30px;
+    font-size: 1em;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .reiniciar-btn:hover {
+    background-color: #c82333;
+  }
+  

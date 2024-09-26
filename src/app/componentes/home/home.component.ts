@@ -42,4 +42,9 @@ export class HomeComponent implements OnInit {
       this.router.navigateByUrl("login")
     }
   }
+
+   // Agrega otro método si necesitas navegar específicamente a resultados
+   NavegarResultados() {
+    this.router.navigate(['/resultado']); // Esto navega al componente de resultados
+  }
 }
