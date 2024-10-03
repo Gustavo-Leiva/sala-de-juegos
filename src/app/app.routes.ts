@@ -8,6 +8,7 @@ import { loginsGuard } from './guards/logins.guard'; // Importa el guard de logi
 import { ChatComponent } from './modules/juegos/componentes/chat/chat.component'; // Importa tu componente de chat
 
 
+
 export const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' }, // Redirige al home por defecto
     { path: 'home', component: HomeComponent },
@@ -15,11 +16,12 @@ export const routes: Routes = [
     { path: 'registro', component: RegistroComponent },
     { path: 'quien-soy', component: QuienSoyComponent },
     { path: 'error', component: ErrorComponent },
+   
 
     {
       path: 'juegos',
       loadChildren:()=>import('./modules/juegos/juegos.module').then(m =>m.JuegosModule),
-      canActivate: [loginsGuard], // Aplicar el guard aquí para todos los juegos
+      canActivate: [loginsGuard], // Aplicar el guard aca para todos los juegos
 
     },
        // Definir el chat fuera del 'juegos'
@@ -29,6 +31,14 @@ export const routes: Routes = [
         canActivate: [loginsGuard]
     },
 
+
+    // Definir la encuesta
+  //   {
+  //     path: 'encuesta',
+  //     component: EncuestaComponent,
+  //     canActivate: [loginsGuard] // Solo accesible si el usuario está logueado
+  // },
+   
     { path: '**', redirectTo: '/error' } // Redireccionar cualquier ruta no encontrada al error
       
     ];

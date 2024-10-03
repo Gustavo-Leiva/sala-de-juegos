@@ -98,6 +98,18 @@ div.puntaje {
   margin-bottom: 20px;
 }
 
+.intentos {
+  font-size: 1.5rem; /* Tamaño de fuente */
+  color: #333; /* Color de texto */
+  margin-bottom: 20px; /* Espacio debajo */
+  text-align: center; /* Centra el texto */
+  font-weight: bold; /* Texto en negrita */
+  background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco semi-transparente */
+  padding: 10px; /* Espacio interno */
+  border-radius: 10px; /* Bordes redondeados */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra */
+}
+
 
 
 

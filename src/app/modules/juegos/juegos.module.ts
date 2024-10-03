@@ -9,7 +9,10 @@ import { PreguntadosComponent } from './componentes/preguntados/preguntados.comp
 import { MayorMenorComponent } from './componentes/mayor-menor/mayor-menor.component';
 import { FormsModule } from '@angular/forms';
 import { ResultadoComponent } from './componentes/resultado/resultado.component';
-import { HomeComponent } from '../../componentes/home/home.component';
+import { ReactiveFormsModule } from '@angular/forms'; // Importa ReactiveFormsModule
+import { EncuestaComponent } from './componentes/encuesta/encuesta.component';
+
+
 
 
 
@@ -18,7 +21,14 @@ import { HomeComponent } from '../../componentes/home/home.component';
     AhorcadoComponent,
     MayorMenorComponent,
     PreguntadosComponent,
-    ResultadoComponent, 
+    ResultadoComponent,
+    EncuestaComponent,
+  
+   
+   
+    
+    
+  
     
   ],
 
@@ -26,14 +36,18 @@ import { HomeComponent } from '../../componentes/home/home.component';
     CommonModule,
     FormsModule,
     JuegosRoutingModule, 
+    ReactiveFormsModule, // Importa aquí
+  
        
   ],
 
-  exports: [ // Asegúrate de exportar ChatComponent aquí
+  exports: [ 
     AhorcadoComponent,
     MayorMenorComponent,
     PreguntadosComponent,
     ResultadoComponent,
+   
+        
     
   ]
   

@@ -28,6 +28,8 @@ export class AhorcadoComponent implements OnInit {
   public mensaje: string = '';
   public respuestasCorrectas: number = 0; // Contador de respuestas correctas
   private resultadoGuardado: boolean = false; // Nueva variable para controlar el estado
+  public intentos: number = 1; //
+  public readonly maxIntentos: number = 3; // Máximo de intentos
 
   // Rutas de las imágenes del ahorcado
   public readonly imagenesAhorcado: string[] = [
@@ -56,7 +58,8 @@ export class AhorcadoComponent implements OnInit {
     this.juegoTerminado = false;
     this.mensaje = '';
     this.respuestasCorrectas = 0; // Reiniciar el contador al iniciar el juego
-}
+    this.intentos = 1; // Asegurar que los intentos se reinicien a 1 al iniciar el juego
+  }
 
   private seleccionarPalabraSecreta(): string {
     return this.palabras[Math.floor(Math.random() * this.palabras.length)].toUpperCase();
@@ -66,33 +69,46 @@ export class AhorcadoComponent implements OnInit {
     return 'ABCDEFGHIJKLMNÑOPQRSTUVWXYZ'.split('');
   }
 
-  // Modifica el método seleccionarLetra
-  public seleccionarLetra(letra: string): void {
-    // Verifica si la letra ya fue usada o si el juego ha terminado
-    if (this.letrasUsadas.includes(letra) || this.juegoTerminado) return;
+ // Método modificado para manejar intentos y palabras fallidas
+public seleccionarLetra(letra: string): void {
+  // Verifica si la letra ya fue usada o si el juego ha terminado
+  if (this.letrasUsadas.includes(letra) || this.juegoTerminado) return;
 
-    // Añade la letra seleccionada a las letras usadas
-    this.letrasUsadas.push(letra);
+  // Añade la letra seleccionada a las letras usadas
+  this.letrasUsadas.push(letra);
 
-    // Verifica si la letra está en la palabra secreta
-    if (this.palabraSecreta.includes(letra)) {
-        this.actualizarPalabraMostrada(letra);
+  // Verifica si la letra está en la palabra secreta
+  if (this.palabraSecreta.includes(letra)) {
+    this.actualizarPalabraMostrada(letra);
 
-        // Verifica si se ha ganado
-        if (!this.palabraMostrada.includes('_')) {
-            this.respuestasCorrectas++; // Solo sumar 1 punto por palabra completa
-            this.mensaje = 'GANASTE!!! ¡Sigue jugando!';
-            // Aquí puedes iniciar una nueva ronda
-            this.iniciarNuevaRonda(); // Reiniciar el juego para una nueva ronda
-        }
-    } else {
-        this.errores++;
-        // Verifica si se ha perdido
-        if (this.errores >= this.maxErrores) {
-            this.finalizarJuego('PERDISTE :/');
-        }
+    // Verifica si se ha ganado (todas las letras descubiertas)
+    if (!this.palabraMostrada.includes('_')) {
+      this.respuestasCorrectas++; // Solo sumar punto por palabra completa
+      this.mensaje = 'GANASTE!!! ¡Sigue jugando!';
+      this.iniciarNuevaRonda(); // Iniciar nueva ronda
     }
+  } else {
+    // Incrementa errores (fallo en la letra)
+    this.errores++;
+
+    // Verifica si se han alcanzado los errores máximos para una palabra
+    if (this.errores >= this.maxErrores) {
+      // Aquí se falló una palabra completa, entonces:
+      this.intentos++; // Incrementar intentos
+
+      // Verifica si se han completado los 3 intentos
+      if (this.intentos > this.maxIntentos) {
+        this.intentos = this.maxIntentos; // Asegura que no muestre más de 3 intentos
+        this.finalizarJuego(); // Finaliza el juego después de 3 intentos fallidos
+      } else {
+        this.mensaje = `PERDISTE :/ Intentos ${this.intentos}/${this.maxIntentos}. ¡Sigue jugando!`;
+        this.iniciarNuevaRonda(); // Iniciar una nueva ronda después de fallar una palabra
+      }
+    }
+  }
 }
+
+
 
 
 private iniciarNuevaRonda(): void {
@@ -103,6 +119,7 @@ private iniciarNuevaRonda(): void {
     this.errores = 0; // Reiniciar errores para la nueva ronda
     this.juegoTerminado = false; // Asegurarse de que el juego no esté terminado
     this.mensaje = ''; // Limpiar el mensaje
+    
 }
 
 
@@ -114,13 +131,20 @@ private iniciarNuevaRonda(): void {
     }
   }
 
-  private finalizarJuego(mensajeFinal: string): void {
-    if (!this.juegoTerminado) { // Asegúrate de que el juego no esté ya terminado
-        this.juegoTerminado = true;
-        this.mensaje = mensajeFinal;
-        this.guardarResultado(); // Guardar resultado al finalizar el juego
-    }
-}
+  private finalizarJuego(): void {
+    this.juegoTerminado = true;
+    this.mensaje = 'PERDISTE :/ Has agotado los 3 intentos';
+    this.guardarResultado();
+  }
+
+
+//   private finalizarJuego(mensajeFinal: string): void {
+//     if (!this.juegoTerminado) { // Asegúra de que el juego no esté ya terminado
+//         this.juegoTerminado = true;
+//         this.mensaje = mensajeFinal;
+//         this.guardarResultado(); // Guardar resultado al finalizar el juego
+//     }
+// }
 
 
   private guardarResultado(): void {
@@ -129,11 +153,11 @@ private iniciarNuevaRonda(): void {
       .catch(error => console.error('Error al guardar el resultado:', error));
   }
 
-// Reinicia el juego completamente
+// Reiniciar el juego cuando el jugador haya llegado a los 3 intentos
 public reiniciarJuego(): void {
-  this.iniciarJuego(); // Reiniciar el juego
+  this.intentos = 1; // Reiniciar intentos a 1
+  this.iniciarJuego();
 }
-
 
 
 public salirJuego(): void {

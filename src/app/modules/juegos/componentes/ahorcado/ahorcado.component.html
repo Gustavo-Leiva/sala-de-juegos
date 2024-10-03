@@ -21,7 +21,8 @@
     <div class="hangman-image">
       <img [src]="imagenesAhorcado[errores]" alt="Ahorcado" />
     </div>
-
+    
+    <p>Intentos: {{ intentos }}/{{ maxIntentos }}</p>
      <!-- Muestra la cantidad de respuestas correctas -->
      <div class="correct-answers">
       <p>Respuestas Correctas: {{ respuestasCorrectas }}</p>
@@ -59,7 +60,7 @@
       </div>
     </div>
 
-    
+
   </div>
 </body>
 

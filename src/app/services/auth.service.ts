@@ -17,24 +17,7 @@ export class AuthService {
     });
   }
 
-  //  // Método para iniciar sesión
-  // async Login(email: string, password: string): Promise<void> {
-  //   this.isLoading = true; // Iniciar la carga
-  //   try{
-      
-  //     const result = await signInWithEmailAndPassword(this.auth, email, password);
-  //     this.userActive = result.user;
-  //   }
-  //   catch(error){
-  //     console.error('Error al iniciar sesión:', error);
-  //     throw error; // Lanza el error para que sea capturado en el componente
-  //   }
-  //   finally{
-  //     this.isLoading = false; // Termina la carga
-  //   }
-
-  // }
-
+  
 
    // Método para iniciar sesión
    async Login(email: string, password: string): Promise<void> {

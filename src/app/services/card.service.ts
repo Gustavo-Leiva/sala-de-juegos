@@ -6,7 +6,9 @@ import { Subject, finalize } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class CardsService {
+
+//cambie CardsService por CardService
+export class CardService {
 
   public nombreMazo!: string;
   public ultimaCarta: Subject<string>;

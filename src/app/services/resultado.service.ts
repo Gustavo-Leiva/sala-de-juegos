@@ -38,7 +38,7 @@ async guardarResultado(juego: string, puntaje: number): Promise<void> {
  obtenerResultados(): Observable<Resultado[]> {
   const filteredQuery = query(
     collection(this.firestore, 'resultados'),
-    orderBy('fecha', 'desc') // Cambia a 'asc' si prefieres orden ascendente
+    orderBy('fecha', 'desc') // Cambia a 'asc' si el profe pide o prefieres orden ascendente
   );
   return collectionData(filteredQuery) as Observable<Resultado[]>;
 }

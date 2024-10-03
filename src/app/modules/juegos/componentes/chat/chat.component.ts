@@ -32,12 +32,49 @@ export class ChatComponent implements OnInit{
   constructor(public auth : AuthService, public chat : ChatService){}
   
   
+  // ngOnInit() {
+  //   this.chat.obtenerChat().subscribe((respuesta) => {
+  //     // Ordenar los mensajes por la fecha antes de asignarlos a mensajesBD
+  //     this.mensajesBD = respuesta.sort((a, b) => {
+  //       return new Date(a.fecha).getTime() - new Date(b.fecha).getTime();
+  //     });
+  //     this.desplazarAlFinal(); // Desplazar después de recibir los mensajes
+  //   });
+  // }
+
   ngOnInit() {
-    this.chat.obtenerChat().subscribe((respuesta) =>   {
-      this.mensajesBD = respuesta;
+    this.chat.obtenerChat().subscribe((respuesta) => {
+      // Convertir las fechas a un formato adecuado o usar una fecha por defecto en caso de error
+      this.mensajesBD = respuesta.map((mensaje) => {
+        let fechaConvertida: string;
+        try {
+          // Intentar convertir la fecha
+          const fecha = new Date(mensaje.fecha);
+          if (isNaN(fecha.getTime())) {
+            // Si la fecha es inválida, asignar una por defecto o manejar el error
+            fechaConvertida = "Fecha inválida";
+          } else {
+            fechaConvertida = this.formatDate(fecha); // Formatear la fecha correctamente
+          }
+        } catch (error) {
+          // Si ocurre algún error, asignar una fecha por defecto
+          fechaConvertida = "Fecha inválida";
+        }
+        
+        return {
+          ...mensaje,
+          fecha: fechaConvertida, // Reemplazar la fecha con la fecha convertida o el mensaje de error
+          emisor: mensaje.emisor || 'Usuario desconocido' // Mostrar emisor o valor por defecto si no existe
+        };
+      }).sort((a, b) => {
+        // Ordenar por fecha si es posible
+        return new Date(a.fecha).getTime() - new Date(b.fecha).getTime();
+      });
+  
+      this.desplazarAlFinal(); // Desplazar después de recibir los mensajes
     });
-    console.log(this.mensajesBD);
   }
+  
 
 
 
@@ -88,7 +125,9 @@ export class ChatComponent implements OnInit{
   }
 
   ngAfterViewChecked() {
-    this.desplazarAlFinal();
+    if (this.chatBody) {
+      this.desplazarAlFinal();
+    }
   }
 
   private desplazarAlFinal() {

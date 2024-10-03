@@ -1,0 +1,117 @@
+<a class="button" [routerLink]="['/home']">
+  <div class="button-box">
+    <span class="button-elem">
+      <svg viewBox="0 0 46 40" xmlns="http://www.w3.org/2000/svg">
+        <path d="M46 20.038c0-.7-.3-1.5-.8-2.1l-16-17c-1.1-1-3.2-1.4-4.4-.3-1.2 1.1-1.2 3.3 0 4.4l11.3 11.9H3c-1.7 0-3 1.3-3 3s1.3 3 3 3h33.1l-11.3 11.9c-1 1-1.2 3.3 0 4.4 1.2 1.1 3.3.8 4.4-.3l16-17c.5-.5.8-1.1.8-1.9z"></path>
+      </svg>
+    </span>
+    <!-- <span class="button-elem">
+      <svg viewBox="0 0 46 40">
+        <path d="M46 20.038c0-.7-.3-1.5-.8-2.1l-16-17c-1.1-1-3.2-1.4-4.4-.3-1.2 1.1-1.2 3.3 0 4.4l11.3 11.9H3c-1.7 0-3 1.3-3 3s1.3 3 3 3h33.1l-11.3 11.9c-1 1-1.2 3.3 0 4.4 1.2 1.1 3.3.8 4.4-.3l16-17c.5-.5.8-1.1.8-1.9z"></path>
+      </svg> -->
+    <!-- </span> -->
+  </div>
+</a>
+
+<form *ngIf="!completed" [formGroup]="encuestaForm" (ngSubmit)="enviarEncuesta()" class="encuesta-form">
+  <h2 class="titulo-encuesta">Danos tu Opinión</h2>
+  <div class="form-group">
+    <label for="nombre">Nombre y Apellido:</label>
+    <input id="nombre" formControlName="nombreApellido" required class="form-control"/>
+    <div *ngIf="encuestaForm.get('nombreApellido')?.invalid && (encuestaForm.get('nombreApellido')?.touched || submitted)" class="error-message">
+      Este campo es obligatorio.
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="edad">Edad:</label>
+    <input id="edad" type="number" formControlName="edad" required class="form-control"/>
+    <div *ngIf="encuestaForm.get('edad')?.invalid && (encuestaForm.get('edad')?.touched || submitted)" class="error-message">
+      Este campo es obligatorio.
+    </div>
+    <div *ngIf="encuestaForm.get('edad')?.hasError('min') || encuestaForm.get('edad')?.hasError('max')" class="error-message">
+      Debe ser mayor de 18 y menor de 99 años.
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="telefono">Número de Teléfono:</label>
+    <input id="telefono" formControlName="telefono" required class="form-control"/>
+    <div *ngIf="encuestaForm.get('telefono')?.invalid && (encuestaForm.get('telefono')?.touched || submitted)" class="error-message">
+      El número de teléfono debe tener 10 dígitos.
+      <!-- Este campo es obligatorio. -->
+    </div>
+    <div *ngIf="encuestaForm.get('telefono')?.hasError('pattern')" class="error-message">
+      Debe ser un número válido.
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="tipoJuegos">¿Qué tipo de juegos prefieres?</label>
+    <div *ngFor="let juego of juegos" class="checkbox-group">
+      <input type="checkbox" [value]="juego" (change)="onCheckboxChange($event)" />
+      <span>{{ juego }}</span>
+    </div>
+    <div *ngIf="tipoJuegos.invalid && submitted" class="error-message">
+      Debes seleccionar al menos una opción.
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="juegoFavorito">¿Cuál es tu juego favorito?</label>
+    <select id="juegoFavorito" formControlName="juegoFavorito" required class="form-control">
+      <option value="">Seleccione un juego</option>
+      <option value="Ahorcado">Ahorcado</option>
+      <option value="Mayor o Menor">Mayor o Menor</option>
+      <option value="Preguntados">Preguntados</option>
+      <option value="Cazador">Cazador</option>
+    </select>
+    <div *ngIf="encuestaForm.get('juegoFavorito')?.invalid && (encuestaForm.get('juegoFavorito')?.touched || submitted)" class="error-message">
+      Este campo es obligatorio.
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="satisfaccion">¿Qué tan satisfecho estás con la aplicación?</label>
+    <div class="radio-group">
+      <input type="radio" id="satisfaccion1" formControlName="satisfaccion" value="1" />
+      <label for="satisfaccion1">1</label>
+    </div>
+    <div class="radio-group">
+      <input type="radio" id="satisfaccion2" formControlName="satisfaccion" value="2" />
+      <label for="satisfaccion2">2</label>
+    </div>
+    <div class="radio-group">
+      <input type="radio" id="satisfaccion3" formControlName="satisfaccion" value="3" />
+      <label for="satisfaccion3">3</label>
+    </div>
+    <div class="radio-group">
+      <input type="radio" id="satisfaccion4" formControlName="satisfaccion" value="4" />
+      <label for="satisfaccion4">4</label>
+    </div>
+    <div class="radio-group">
+      <input type="radio" id="satisfaccion5" formControlName="satisfaccion" value="5" />
+      <label for="satisfaccion5">5</label>
+    </div>
+    <div *ngIf="encuestaForm.get('satisfaccion')?.invalid && (encuestaForm.get('satisfaccion')?.touched || submitted)" class="error-message">
+      Debes seleccionar una opción.
+    </div>
+  </div>
+
+  <button type="submit" class="submit-btn">Enviar Encuesta</button>
+</form>
+
+
+<!-- Overlay del spinner que aparece en el centro -->
+<div *ngIf="isLoading" class="spinner-overlay">
+  <div class="spinner"></div>
+  <!-- <p>Enviando encuesta...</p> -->
+</div>
+
+<!-- Mensaje de confirmación que aparece después de enviar -->
+<div *ngIf="completed" class="confirmation-message">
+  <p>😊 Encuesta enviada satisfactoriamente. ¡Encuesta terminada! 😊</p>
+</div>
+
+
+<p *ngIf="submitted && encuestaForm.invalid" class="error-message">Por favor completa todos los campos obligatorios.</p>
