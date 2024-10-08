@@ -19,8 +19,9 @@ export class CazadorComponent implements OnInit {
   puntaje: number = 0; // Variable para almacenar el puntaje
   intervaloMovimiento: any;
   gameOver: boolean = false;
-  tiempoRestante: number = 30; // Duración del juego en segundos
+  tiempoRestante: number = 15; // Duración del juego en segundos
   mostrarTitulo: boolean = true; // Nueva propiedad para mostrar/ocultar el título
+  colorFigura: string = '#3498db'; // Color inicial del círculo
 
   // Inyecta el servicio de resultados en el constructor
   constructor(private resultadoService: ResultadoService) {}
@@ -36,7 +37,7 @@ export class CazadorComponent implements OnInit {
   iniciarJuego(): void {
     this.gameOver = false;
     this.mostrarTitulo = true; // Mostrar el título al inicio
-    this.tiempoRestante = 30; // Reinicia el tiempo
+    this.tiempoRestante = 15; // Reinicia el tiempo
     this.puntaje = 0; // Reinicia el puntaje
 
       // Ocultar el título después de 2 segundos
@@ -69,6 +70,12 @@ export class CazadorComponent implements OnInit {
     }
   }
 
+  cambiarColorFigura(): void {
+    // Cambia a un color aleatorio cada vez que se hace clic
+    const colores = ['#3498db', '#e74c3c', '#2ecc71', '#f1c40f', '#9b59b6', '#1abc9c'];
+    this.colorFigura = colores[Math.floor(Math.random() * colores.length)];
+  }
+
   temporizador(): void {
     const interval = setInterval(() => {
       if (this.tiempoRestante > 0) {
@@ -82,13 +89,14 @@ export class CazadorComponent implements OnInit {
 
   calcularProgreso(): number {
     // Calcula el porcentaje del tiempo restante para actualizar la barra de progreso
-    return (this.tiempoRestante / 30) * 100;
+    return (this.tiempoRestante / 15) * 100;
   }
   cazarFigura(): void {
     // Incrementa el puntaje cada vez que se hace clic en la figura
     if (!this.gameOver) {
       this.puntaje++;
       this.moverFigura(); // Mueve la figura inmediatamente después de capturarla
+      this.cambiarColorFigura(); // Cambiar el color después de capturar la figura
     }
   }
 
