@@ -1,57 +1,49 @@
-<div class="preguntados-container">
-    <a class="button" [routerLink]="['/home']">
-        <div class="button-box">
-          <span class="button-elem">
+<div>
+  <a class="button" [routerLink]="['/home']">
+    <div class="button-box">
+        <span class="button-elem">
+            <!-- Icono de vuelta a Home -->
             <svg viewBox="0 0 46 40" xmlns="http://www.w3.org/2000/svg">
-              <path d="M46 20.038c0-.7-.3-1.5-.8-2.1l-16-17c-1.1-1-3.2-1.4-4.4-.3-1.2 1.1-1.2 3.3 0 4.4l11.3 11.9H3c-1.7 0-3 1.3-3 3s1.3 3 3 3h33.1l-11.3 11.9c-1 1-1.2 3.3 0 4.4 1.2 1.1 3.3.8 4.4-.3l16-17c.5-.5.8-1.1.8-1.9z"></path>
-            </svg>
-          </span>
-          <!-- <span class="button-elem">
-            <svg viewBox="0 0 46 40">
-              <path d="M46 20.038c0-.7-.3-1.5-.8-2.1l-16-17c-1.1-1-3.2-1.4-4.4-.3-1.2 1.1-1.2 3.3 0 4.4l11.3 11.9H3c-1.7 0-3 1.3-3 3s1.3 3 3 3h33.1l-11.3 11.9c-1 1-1.2 3.3 0 4.4 1.2 1.1 3.3.8 4.4-.3l16-17c.5-.5.8-1.1.8-1.9z"></path>
-            </svg> -->
-          <!-- </span> -->
-        </div>
-      </a>
-    <!-- Título del juego -->
-    <h1>Preguntados</h1>
-  
-    <!-- Contador de tiempo -->
-    <div class="timer">
-      <p>Tiempo restante: {{ tiempoRestante }} segundos</p>
+                <path d="M46 20.038c0-.7-.3-1.5-.8-2.1l-16-17c-1.1-1-3.2-1.4-4.4-.3-1.2 1.1-1.2 3.3 0 4.4l11.3 11.9H3c-1.7 0-3 1.3-3 3s1.3 3 3 3h33.1l-11.3 11.9c-1 1-1.2 3.3 0 4.4 1.2 1.1 3.3.8 4.4-.3l16-17c.5-.5.8-1.1.8-1.9z"></path>
+              </svg>
+        </span>
     </div>
-  
-    <!-- Contador de respuestas correctas -->
-    <div class="contador-respuestas">
-      <p>Respuestas correctas: {{ respuestasCorrectas }}</p>
-    </div>
-  
-    <!-- Pregunta y opciones -->
-    <div class="preguntados-card">
-      <!-- Título de la categoría -->
-      <h2 class="categoria">{{ categoria }}</h2>
-  
-      <div class="pregunta">
-        <h3>{{ pregunta }}</h3>
-        <img [src]="imagen" alt="Imagen relacionada" *ngIf="imagen" class="imagen-pregunta">
-      </div>
-  
-      <div class="opciones" *ngIf="!respuestaSeleccionada">
-        <button *ngFor="let opcion of opciones" (click)="verificarRespuesta(opcion)">
-          {{ opcion }}
-        </button>
-      </div>
-  
-      <div class="resultado">
-        <p>{{ mensajeResultado }}</p>
-      </div>
-    </div>
-  
-    <!-- Botón de reiniciar, visible solo si la respuesta es incorrecta -->
-    <button class="reiniciar-btn" *ngIf="mensajeResultado.startsWith('¡Incorrecto!')" (click)="reiniciarJuego()">Reiniciar Juego</button>
+</a>
+</div>
 
+<div class="preguntados-container">
+  <h2 class="titulo-juego">¡Desafía tu Conocimiento!</h2>
+  <h3>¿A qué país pertenece esta bandera?</h3>
+
+  <div *ngIf="paisActual" class="pregunta-container">
+    <img [src]="paisActual.flags.png" alt="Bandera" class="bandera">
+
+    <div class="opciones">
+      <button *ngFor="let opcion of opciones" (click)="verificarRespuesta(opcion)" class="opcion-button">
+        {{ opcion }}
+      </button>
+    </div>
+
+    <div class="resultado-info">
+      <p>Total de respuestas correctas: <strong>{{ respuestasCorrectas }}</strong></p>
+      <p>Tiempo restante: <strong>{{ tiempoRestante }} segundos</strong></p>
+      <p class="mensaje-resultado">{{ mensajeResultado }}</p>
+    </div>
   </div>
-  
+
+  <div *ngIf="!paisActual">
+    <p>Cargando...</p>
+  </div>
+
+
+   <!-- Botón de reinicio -->
+   <button *ngIf="juegoTerminado" (click)="reiniciarJuego()" class="reiniciar-button">
+    Reiniciar Juego
+  </button>
+
+
+</div>
+
   
   
   

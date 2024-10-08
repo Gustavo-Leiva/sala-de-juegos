@@ -1,3 +1,38 @@
+.button-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro semi-transparente */
+  padding: 10px;
+  border-radius: 50px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.button-box:hover {
+  background-color: rgba(0, 0, 0, 0.7); /* Fondo más oscuro al hacer hover */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.button-elem {
+  display: block;
+  width: 24px;
+  height: 24px;
+  margin: 0 12px;
+  transform: rotate(180deg);
+  fill: #ffffff;
+  transition: fill 0.3s ease, transform 0.3s ease;
+}
+
+.button-elem:hover {
+  fill: #00bcd4;
+  transform: rotate(180deg) scale(1.1);
+}
+
+
 .resultado-container {
     max-height:400px; /* Establece una altura máxima para el contenedor */
     overflow-y: auto; /* Habilita el desplazamiento vertical */

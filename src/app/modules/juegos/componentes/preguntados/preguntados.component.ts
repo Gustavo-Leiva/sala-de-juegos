@@ -2,97 +2,102 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { PreguntadosService } from '../../../../services/preguntados.service';
 import { ResultadoService } from '../../../../services/resultado.service';
 
+interface Pais {
+  name: { common: string };
+  flags: { png: string };
+  translations?: { spa?: { common: string } }; // Agregar traducciones
+}
 
 @Component({
   selector: 'app-preguntados',
-  standalone: false,
   templateUrl: './preguntados.component.html',
   styleUrls: ['./preguntados.component.css']
 })
 export class PreguntadosComponent implements OnInit, OnDestroy {
-  pregunta: string = ''; // Para almacenar la pregunta actual
-  opciones: string[] = []; // Opciones de respuesta
-  imagen: string | null = null; // Imagen relacionada con la pregunta
-  categoria: string = ''; // Nueva propiedad para la categoría
-  mensajeResultado: string = ''; // Mensaje de resultado (ganaste/perdiste)
-  respuestaCorrecta: string = ''; // La respuesta correcta
-  tiempoRestante: number = 30; // Inicialmente, 30 segundos
+  paisActual: Pais | undefined;
+  opciones: string[] = []; // Opciones de países
+  mensajeResultado: string = ''; // Mensaje de resultado
+  tiempoRestante: number = 15; // Inicialmente, 15 segundos
   intervalo: any; // Guardar referencia al intervalo del temporizador
   respuestasCorrectas: number = 0; // Contador de respuestas correctas
-  respuestaSeleccionada: boolean = false; // Para saber si se ha seleccionado una respuesta
+  juegoTerminado: boolean = false; // Para saber si el juego ha terminado
 
   constructor(private preguntadosService: PreguntadosService, private resultadoService: ResultadoService) {}
 
   ngOnInit(): void {
-    this.cargarPreguntaYImagen(); // Carga una nueva pregunta y una imagen al iniciar el componente
-    this.iniciarTemporizador(); // Inicia el temporizador
+    this.iniciarJuego(); // Iniciar el juego al cargar el componente
   }
 
-  cargarPreguntaYImagen(): void {
-    // Llamada al servicio para obtener la pregunta
-    this.preguntadosService.obtenerPregunta().subscribe(data => {
-      const resultadoPregunta = data.results[0];
+  iniciarJuego(): void {
+    this.respuestasCorrectas = 0; // Reiniciar el contador de respuestas correctas
+    this.juegoTerminado = false; // Reiniciar estado de juego
+    this.cargarNuevaPregunta(); // Cargar la primera pregunta
+    this.iniciarTemporizador(); // Iniciar el temporizador
+  }
 
-      // Decodificar la pregunta y las opciones
-      this.pregunta = this.decodificarHtml(resultadoPregunta.question);
-      this.opciones = resultadoPregunta.incorrect_answers.map((opcion: string) => this.decodificarHtml(opcion)); // Especificar el tipo aquí
-      this.opciones.push(this.decodificarHtml(resultadoPregunta.correct_answer)); // Agregar la respuesta correcta
-      this.opciones = this.opciones.sort(() => Math.random() - 0.5); // Mezcla las opciones aleatoriamente
-      this.respuestaCorrecta = resultadoPregunta.correct_answer; // Asigna la respuesta correcta
-      this.categoria = this.decodificarHtml(resultadoPregunta.category); // Asignar y decodificar la categoría
-      this.mensajeResultado = ''; // Reiniciar el mensaje de resultado
-      this.respuestaSeleccionada = false; // Reiniciar estado de respuesta seleccionada
+  cargarNuevaPregunta(): void {
+    if (this.juegoTerminado) return; // Si el juego ya terminó, no cargar nuevas preguntas
 
-      this.tiempoRestante = 30; // Reiniciar el tiempo a 30 segundos
-      clearInterval(this.intervalo); // Limpiar el intervalo existente
-      this.iniciarTemporizador(); // Iniciar el temporizador
-    });
+    this.preguntadosService.getPaises().subscribe(paises => {
+      if (paises.length > 0) {
+        // Elegir un país aleatorio
+        const randomIndex = Math.floor(Math.random() * paises.length);
+        this.paisActual = paises[randomIndex];
 
-    // Llamada al servicio para obtener una imagen aleatoria
-    this.preguntadosService.obtenerImagen().subscribe(response => {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        this.imagen = reader.result as string; // Asignar la imagen al componente
-      };
-      reader.readAsDataURL(response); // Convierte el blob en una URL
+        // Elegir tres opciones incorrectas al azar
+        this.opciones = paises
+          .filter(p => p !== this.paisActual) // Filtrar para no incluir el país correcto
+          .sort(() => 0.5 - Math.random()) // Barajar
+          .slice(0, 3) // Tomar 3 países
+          .map(p => p.translations?.spa?.common || p.name.common); // Obtener sus nombres en español
+
+        // Incluir la opción correcta
+        this.opciones.push(this.paisActual.translations?.spa?.common || this.paisActual.name.common);
+        this.opciones.sort(() => 0.5 - Math.random()); // Barajar las opciones
+
+        this.mensajeResultado = ''; // Reiniciar mensaje de resultado
+      }
     });
   }
 
-  // verificarRespuesta(opcion: string): void {
-  //   const esCorrecta = this.preguntadosService.verificarRespuesta(opcion, this.respuestaCorrecta);
-  //   this.respuestaSeleccionada = true; // Indicar que se ha seleccionado una respuesta
-  
-  //   if (esCorrecta) {
-  //     this.mensajeResultado = '¡Correcto!';
-  //     this.respuestasCorrectas++; // Aumentar el contador de respuestas correctas
-  //     setTimeout(() => this.cargarPreguntaYImagen(), 2000); // Cargar nueva pregunta después de 2 segundos
-  //   } else {
-  //     const respuestaCorrectaDecodificada = this.decodificarHtml(this.respuestaCorrecta); // Decodificar la respuesta correcta
-  //     this.mensajeResultado = `¡Incorrecto! La respuesta correcta es: ${respuestaCorrectaDecodificada}`; // Mostrar la respuesta correcta
-  //     clearInterval(this.intervalo); // Detener el temporizador al seleccionar una respuesta
-  //   }
-  // }
+  iniciarTemporizador(): void {
+    this.intervalo = setInterval(() => {
+      if (this.tiempoRestante > 0) {
+        this.tiempoRestante--; // Decrementar el tiempo
+      } else {
+        this.tiempoTerminado(); // Si se acaba el tiempo, ejecutar esta función
+      }
+    }, 1000);
+  }
 
   verificarRespuesta(opcion: string): void {
-    const esCorrecta = this.preguntadosService.verificarRespuesta(opcion, this.respuestaCorrecta);
-    this.respuestaSeleccionada = true; // Indicar que se ha seleccionado una respuesta
-    
-    if (esCorrecta) {
+    if (this.juegoTerminado) return; // Si el juego ya terminó, no verificar respuesta
+
+    clearInterval(this.intervalo); // Detener el temporizador al verificar respuesta
+
+    const respuestaCorrecta = this.paisActual?.translations?.spa?.common || this.paisActual?.name.common;
+
+    if (opcion === respuestaCorrecta) {
       this.mensajeResultado = '¡Correcto!';
-      this.respuestasCorrectas++; // Aumentar el contador de respuestas correctas
-  
-      // Continuar el juego con otra pregunta
-      setTimeout(() => this.cargarPreguntaYImagen(), 2000); // Cargar nueva pregunta después de 2 segundos
+      this.respuestasCorrectas++; // Incrementar el contador de respuestas correctas
     } else {
-      const respuestaCorrectaDecodificada = this.decodificarHtml(this.respuestaCorrecta); // Decodificar la respuesta correcta
-      this.mensajeResultado = `¡Incorrecto! La respuesta correcta es: ${respuestaCorrectaDecodificada}`; // Mostrar la respuesta correcta
-      clearInterval(this.intervalo); // Detener el temporizador al seleccionar una respuesta
-      
-      // Guardar el puntaje solo al perder (cuando responde incorrectamente)
-      this.guardarPuntaje();
+      this.mensajeResultado = `¡Incorrecto! La respuesta correcta es: ${respuestaCorrecta}`;
     }
+
+    setTimeout(() => this.cargarNuevaPregunta(), 1000); // Nueva pregunta tras 2 segundos
+    this.iniciarTemporizador(); // Reiniciar el temporizador para la nueva pregunta
   }
-  
+
+  tiempoTerminado(): void {
+    clearInterval(this.intervalo); // Limpiar el intervalo
+    this.mensajeResultado = '¡El tiempo se ha acabado!'; // Mensaje de tiempo agotado
+    this.mensajeResultado += ` Has respondido correctamente ${this.respuestasCorrectas} preguntas.`;
+    this.juegoTerminado = true; // Marcar que el juego ha terminado
+
+    // Llamar a guardarPuntaje() cuando se termina el juego
+    this.guardarPuntaje();
+  }
+
   guardarPuntaje(): void {
     this.resultadoService.guardarResultado('Preguntados', this.respuestasCorrectas).then(() => {
       console.log('Resultado guardado correctamente');
@@ -100,61 +105,14 @@ export class PreguntadosComponent implements OnInit, OnDestroy {
       console.error('Error al guardar el resultado:', error);
     });
   }
-  
- 
-
-  iniciarTemporizador(): void {
-    // Inicia un intervalo que reduce el tiempo cada segundo
-    this.intervalo = setInterval(() => {
-      if (this.tiempoRestante > 0) {
-        this.tiempoRestante--;
-      } else {
-        this.tiempoTerminado(); // Si se acaba el tiempo, ejecuta esta función
-      }
-    }, 1000);
-  }
-
-  // tiempoTerminado(): void {
-  //   alert('¡El tiempo se ha acabado!'); // Alerta cuando el tiempo termina
-  //   clearInterval(this.intervalo); // Detener el temporizador
-  //   this.mensajeResultado = 'El tiempo se agotó.';
-  //   this.respuestaSeleccionada = true; // Indicar que se ha seleccionado una respuesta
-  // }
-
-
-  tiempoTerminado(): void {
-    alert('¡El tiempo se ha acabado!');
-    clearInterval(this.intervalo); // Detener el temporizador
-    this.mensajeResultado = 'El tiempo se agotó.';
-    this.respuestaSeleccionada = true; // Indicar que se ha seleccionado una respuesta
-  
-    // Guardar el puntaje cuando se acaba el tiempo
-    this.resultadoService.guardarResultado('Preguntados', this.respuestasCorrectas).then(() => {
-      console.log('Resultado guardado correctamente al finalizar el tiempo');
-    }).catch(error => {
-      console.error('Error al guardar el resultado:', error);
-    });
-  }
-  
 
   reiniciarJuego(): void {
-    this.tiempoRestante = 30; // Reinicia el tiempo a 30 segundos
-    this.respuestasCorrectas = 0; // Reiniciar contador de respuestas correctas
-    clearInterval(this.intervalo); // Detiene el temporizador actual
-    this.cargarPreguntaYImagen(); // Carga una nueva pregunta
-    this.iniciarTemporizador(); // Reinicia el temporizador
-    this.respuestaSeleccionada = false; // Reiniciar estado de respuesta seleccionada
+    this.tiempoRestante = 15; // Reiniciar tiempo
+    this.iniciarJuego(); // Reiniciar el juego
   }
 
   ngOnDestroy(): void {
     clearInterval(this.intervalo); // Limpiar el intervalo al destruir el componente
-  }
-
-  // Método para decodificar HTML
-  decodificarHtml(html: string): string {
-    const textarea = document.createElement('textarea');
-    textarea.innerHTML = html;
-    return textarea.value;
   }
 }
 
