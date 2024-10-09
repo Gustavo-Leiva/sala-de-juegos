@@ -17,8 +17,8 @@ body {
   width: 100%;
   top: 0;
   z-index: 1000;
-  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); */
   box-sizing: border-box; /* Asegura que el padding no se desborde */
+  flex-wrap: wrap; /* Elementos se mueven en pantallas pequeñas */
 }
 
 /* Contenedor de la izquierda, centro y derecha */
@@ -62,19 +62,17 @@ body {
   color: #fff;
   text-decoration: none;
   margin: 0 15px;
-  padding: 10px 15px; /* Asegura que el botón tenga suficiente área clickable */
-  border-radius: 4px; /* Bordes redondeados para un aspecto más moderno */
+  padding: 10px 15px;
+  border-radius: 4px; /* Bordes redondeados */
   font-size: 1rem;
-  white-space: nowrap; /* Evita el salto de línea en los enlaces */
+  white-space: nowrap; /* Evita el salto de línea */
 }
 
-/* Efecto hover para los enlaces */
 .nav-link:hover {
-  background-color: #444; /* Color de fondo al pasar el ratón */
-  text-decoration: none;
+  background-color: #444; /* Efecto hover */
 }
 
-/* Estilos para el dropdown */
+/* Dropdown */
 .dropdown {
   position: relative;
 }
@@ -86,7 +84,7 @@ body {
   padding: 10px 15px;
   cursor: pointer;
   font-size: 1rem;
-  border-radius: 4px; /* Bordes redondeados para el botón del dropdown */
+  border-radius: 4px;
 }
 
 .dropdown-menu {
@@ -99,8 +97,8 @@ body {
   border: 1px solid #ddd;
   border-radius: 5px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  z-index: 1000;
   min-width: 160px;
+  z-index: 1000;
 }
 
 .dropdown-item {
@@ -123,24 +121,61 @@ body {
   .navbar {
     flex-direction: column;
     align-items: flex-start;
+    padding: 10px 20px;
   }
 
   .navbar-left,
-  .navbar-right {
-    width: 100%;
-    justify-content: space-between;
-    margin-bottom: 10px;
-  }
-
+  .navbar-right,
   .navbar-center {
     width: 100%;
     justify-content: center;
     margin-bottom: 10px;
+    
   }
 
   .dropdown-menu {
     min-width: 100%;
   }
+
+  .navbar-center {
+    display: none; /* Ocultar en pantallas pequeñas */
+  }
+
+  .hamburger-menu {
+    display: block; /* Mostrar menú hamburguesa */
+  }
+}
+
+/* Menú hamburguesa */
+.hamburger-menu {
+  display: none;
+}
+
+.hamburger-toggle {
+  background-color: #333;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 1.5rem;
+  border-radius: 4px;
+}
+
+.hamburger-dropdown {
+  display: none;
+  background-color: #fff;
+  color: #333;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 100%;
+}
+
+.hamburger-dropdown.active {
+  display: block;
 }
 
 /* Estilos para la página de inicio */
@@ -159,7 +194,7 @@ body {
 
 .game-card {
   padding: 20px;
-  background-color: #ffffff;
+  background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   cursor: pointer;
@@ -184,4 +219,35 @@ body {
   max-width: 100%;
   border-radius: 8px;
   height: auto;
+}
+
+.hamburger-dropdown.active {
+  display: block; /* Mostrar menú cuando está activo */
+}
+
+/* Ajustes responsivos */
+@media (max-width: 768px) {
+
+ h1{
+    margin-top: 5rem;
+  }
+
+  .home-container {
+    padding: 10px;
+  }
+
+  .navbar-left {
+    flex-grow: 1; /* Permitir que la parte izquierda ocupe espacio adicional */
+    justify-content: space-between; /* Espaciado entre elementos */
+  }
+  .game-grid {
+    grid-template-columns: 1fr; /* Una sola columna en pantallas pequeñas */
+  }
+
+  .hamburger-menu {
+    display: block; /* Mostrar menú hamburguesa en pantallas pequeñas */
+    cursor: pointer; /* Cambiar cursor al pasar sobre el menú */
+    font-size: 14px; /* Tamaño del ícono */
+    margin-left: 20px; /* Espacio entre otros elementos */
+  }
 }

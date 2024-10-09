@@ -17,11 +17,15 @@ import { JuegosModule } from '../../modules/juegos/juegos.module';
 })
 
 export class HomeComponent implements OnInit {
+  isMenuOpen: boolean = false; // Variable para controlar el estado del menú
+  
   constructor(public authService: AuthService, private router: Router) {}
-
+  
   ngOnInit() {}
 
- 
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen; // Alterna entre abrir/cerrar el menú
+  }
 
   // Método para navegar a un destino específico
   goTo(path: string) {

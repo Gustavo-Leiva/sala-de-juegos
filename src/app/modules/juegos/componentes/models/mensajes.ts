@@ -1,5 +1,6 @@
 export interface Mensaje{
-    emisor: string,
+    emisor: string | null; // Permite null
     fecha: string | Date,
     texto: string,
 }
+
